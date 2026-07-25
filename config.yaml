@@ -1,0 +1,9 @@
+custom_providers:
+  - name: cerebras
+    base_url: https://api.cerebras.ai/v1
+    key_env: CEREBRAS_API_KEY
+
+model:
+  default: gpt-oss-120b
+  provider: custom:cerebras
+  max_tokens: 4000
