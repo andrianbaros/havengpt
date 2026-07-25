@@ -33,29 +33,68 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    const response = await fetch('https://api.cerebras.ai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model,
-        messages: formattedMessages,
-        stream: true,
-      }),
-    });
+    let response: Response;
+    let isCerebrasSuccess = false;
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      return NextResponse.json(
-        { error: `Cerebras API returned error: ${response.status} ${response.statusText}. Details: ${errorText}` },
-        { status: response.status }
-      );
+    try {
+      response = await fetch('https://api.cerebras.ai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model,
+          messages: formattedMessages,
+          stream: true,
+        }),
+      });
+
+      if (response.ok) {
+        isCerebrasSuccess = true;
+      } else {
+        const errorText = await response.text();
+        console.warn(`Cerebras API failed (Status: ${response.status}). Trying Bynara fallback... Details: ${errorText}`);
+      }
+    } catch (error) {
+      console.warn('Cerebras API request exception. Trying Bynara fallback...', error);
+    }
+
+    // Trigger Bynara Fallback if Cerebras fails
+    if (!isCerebrasSuccess) {
+      const bynaraApiKey = process.env.BYNARA_API_KEY;
+      if (!bynaraApiKey) {
+        return NextResponse.json(
+          { error: 'Cerebras API failed, and BYNARA_API_KEY is not configured on the server for fallback.' },
+          { status: 500 }
+        );
+      }
+
+      console.log('Routing request to Bynara fallback API with model: nemotron-3-ultra');
+      response = await fetch('https://router.bynara.id/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${bynaraApiKey}`,
+        },
+        body: JSON.stringify({
+          model: 'nemotron-3-ultra',
+          messages: formattedMessages,
+          stream: true,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        return NextResponse.json(
+          { error: `Both Cerebras and Bynara fallback failed. Bynara error: ${response.status} ${response.statusText}. Details: ${errorText}` },
+          { status: response.status }
+        );
+      }
     }
 
     // Forward the stream
-    return new Response(response.body, {
+    return new Response(response!.body, {
       headers: {
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache, no-transform',
