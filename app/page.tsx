@@ -177,6 +177,8 @@ export default function Home() {
         body: JSON.stringify({
           messages: updatedMessages.map(({ role, content }) => ({ role, content })),
           model: settings.model,
+          temperature: settings.temperature,
+          maxTokens: settings.maxTokens,
         }),
         signal: abortControllerRef.current.signal,
       });
@@ -297,7 +299,7 @@ export default function Home() {
   const activeChat = getActiveChat();
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#05070F]">
+    <div className="flex h-screen w-screen overflow-hidden bg-[#05070B]">
       {/* Sidebar navigation */}
       <Sidebar
         isOpen={sidebarOpen}
@@ -320,6 +322,7 @@ export default function Home() {
         isGenerating={isGenerating}
         onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
         modelName={settings.model}
+        onChangeModel={(model) => setSettings((prev) => ({ ...prev, model }))}
       />
 
       {/* Settings Modal popup */}

@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# KasepGPT
 
-## Getting Started
+AI Assistant yang cepat, cerdas, dan responsif — dibuat oleh **Andrian Baros**.
 
-First, run the development server:
+Built with Next.js 16, React 19, dan TailwindCSS v4. Menggunakan Bynara sebagai provider utama dan Cerebras sebagai fallback otomatis.
+
+---
+
+## Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript
+- **Styling**: TailwindCSS v4
+- **Primary LLM**: [Bynara](https://bynara.id) (agnes-2.0-flash, mistral-large, mistral-medium-3-5)
+- **Fallback LLM**: [Cerebras](https://cloud.cerebras.ai) (gpt-oss-120b)
+- **Streaming**: Server-Sent Events via Next.js API Route
+
+---
+
+## Deploy ke Vercel
+
+### 1. Push ke GitHub
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git add .
+git commit -m "feat: ready for production"
+git push
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Import ke Vercel
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Buka [vercel.com/new](https://vercel.com/new) → Import repository ini.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Set Environment Variables
 
-## Learn More
+Di Vercel Dashboard → Settings → Environment Variables, tambahkan:
 
-To learn more about Next.js, take a look at the following resources:
+| Variable | Value |
+|---|---|
+| `BYNARA_API_KEY` | API key dari bynara.id |
+| `CEREBRAS_API_KEY` | API key dari cloud.cerebras.ai |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 4. Deploy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Klik **Deploy**. Vercel akan otomatis build dan deploy.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Development Lokal
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+# Clone dan install
+git clone https://github.com/username/BotKasepChat.git
+cd BotKasepChat
+npm install
+
+# Salin env
+cp .env.example .env.local
+# Isi API keys di .env.local
+
+# Jalankan dev server
+npm run dev
+```
+
+Buka [http://localhost:3000](http://localhost:3000).
+
+---
+
+## Fitur
+
+- Streaming response real-time
+- Multi-model: ganti model langsung dari header
+- Auto-failover: jika provider utama gagal, otomatis beralih ke fallback
+- Chat history tersimpan di localStorage (tidak ada backend database)
+- Markdown rendering: code blocks, tables, lists, inline code
+- Syntax highlighting untuk JS, TS, Python, HTML, CSS, SQL, Bash
+- Settings: temperature, max tokens
+- Responsive: desktop, tablet, mobile
+
+---
+
+## Lisensi
+
+MIT — Dibuat oleh [Andrian Baros](https://github.com/andrianbaros).

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { X, CheckCircle, AlertTriangle, Info } from 'lucide-react';
+import { X, CheckCircle2, AlertTriangle, Info } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export interface ToastMessage {
@@ -16,13 +16,23 @@ interface ToastProps {
   onClose: () => void;
 }
 
+const ICONS = {
+  success: <CheckCircle2 className="h-4 w-4 text-emerald-400" strokeWidth={1.75} />,
+  error:   <AlertTriangle className="h-4 w-4 text-[#F87171]" strokeWidth={1.75} />,
+  info:    <Info className="h-4 w-4 text-[#60a5fa]" strokeWidth={1.75} />,
+};
+
+const PROGRESS_COLORS = {
+  success: '#34d399',
+  error:   '#f87171',
+  info:    '#60a5fa',
+};
+
 export default function Toast({ toast, onClose }: ToastProps) {
   useEffect(() => {
     if (toast) {
-      const timer = setTimeout(() => {
-        onClose();
-      }, 5000);
-      return () => clearTimeout(timer);
+      const t = setTimeout(onClose, 5000);
+      return () => clearTimeout(t);
     }
   }, [toast, onClose]);
 
@@ -30,29 +40,20 @@ export default function Toast({ toast, onClose }: ToastProps) {
     <AnimatePresence>
       {toast && (
         <motion.div
-          initial={{ opacity: 0, y: 50, scale: 0.95 }}
+          key={toast.id}
+          initial={{ opacity: 0, y: 12, scale: 0.97 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 20, scale: 0.95 }}
-          transition={{ duration: 0.2 }}
-          className="fixed bottom-6 right-6 z-50 flex w-full max-w-sm overflow-hidden rounded-xl border border-white/10 bg-[#0B1220]/90 backdrop-blur-md shadow-2xl"
+          exit={{ opacity: 0, y: 8, scale: 0.97 }}
+          transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+          className="fixed bottom-5 right-5 z-50 w-full max-w-[320px] overflow-hidden rounded-xl border border-white/[0.08] bg-[#0B1220] shadow-[0_8px_32px_rgba(0,0,0,0.6)] backdrop-blur-md"
         >
-          <div className="flex w-full items-start p-4 gap-3">
-            <div className="flex-shrink-0 mt-0.5">
-              {toast.type === 'success' && (
-                <CheckCircle className="h-5 w-5 text-emerald-400" />
-              )}
-              {toast.type === 'error' && (
-                <AlertTriangle className="h-5 w-5 text-rose-500" />
-              )}
-              {toast.type === 'info' && (
-                <Info className="h-5 w-5 text-blue-400" />
-              )}
-            </div>
-            
-            <div className="flex-1">
-              <h3 className="text-sm font-semibold text-white">{toast.title}</h3>
+          <div className="flex items-start gap-3 p-4">
+            <div className="mt-px shrink-0">{ICONS[toast.type]}</div>
+
+            <div className="flex-1 min-w-0">
+              <p className="text-[13px] font-medium text-[#F8FAFC]">{toast.title}</p>
               {toast.description && (
-                <p className="mt-1 text-xs text-[#A5B4C7] leading-relaxed">
+                <p className="mt-0.5 text-[12px] leading-relaxed text-[#94A3B8]">
                   {toast.description}
                 </p>
               )}
@@ -60,20 +61,19 @@ export default function Toast({ toast, onClose }: ToastProps) {
 
             <button
               onClick={onClose}
-              className="flex-shrink-0 rounded-lg p-1 text-[#A5B4C7] hover:bg-white/5 hover:text-white transition-colors"
+              className="mt-px shrink-0 rounded-md p-0.5 text-[#475569] hover:text-[#94A3B8] transition-colors duration-150 focus-visible:outline-none"
             >
-              <X className="h-4 w-4" />
+              <X className="h-3.5 w-3.5" strokeWidth={1.75} />
             </button>
           </div>
+
           {/* Progress bar */}
           <motion.div
             initial={{ width: '100%' }}
             animate={{ width: '0%' }}
             transition={{ duration: 5, ease: 'linear' }}
-            className={`absolute bottom-0 left-0 h-[2px] ${
-              toast.type === 'success' ? 'bg-emerald-400' :
-              toast.type === 'error' ? 'bg-rose-500' : 'bg-blue-500'
-            }`}
+            style={{ backgroundColor: PROGRESS_COLORS[toast.type] }}
+            className="absolute bottom-0 left-0 h-[1.5px] opacity-60"
           />
         </motion.div>
       )}
