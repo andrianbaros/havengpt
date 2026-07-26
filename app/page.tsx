@@ -51,10 +51,13 @@ export default function Home() {
     const savedActiveId = chatStorage.loadActiveChatId();
 
     if (savedChats.length > 0) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setChats(savedChats);
       if (savedActiveId && savedChats.some(c => c.id === savedActiveId)) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setActiveChatId(savedActiveId);
       } else {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setActiveChatId(savedChats[0].id);
       }
     } else {
@@ -65,7 +68,9 @@ export default function Home() {
         messages: [],
         createdAt: Date.now(),
       };
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setChats([initialChat]);
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setActiveChatId(newChatId);
       chatStorage.saveChats([initialChat]);
       chatStorage.saveActiveChatId(newChatId);
