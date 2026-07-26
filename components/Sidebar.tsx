@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Plus, MessageSquare, Trash2, Settings, X, Heart, Sparkles, HardDrive, AlertTriangle, Sun, Moon } from 'lucide-react';
+import { Plus, MessageSquare, Trash2, Settings, X, Heart, Sparkles, HardDrive, AlertTriangle, Sun, Moon, Info } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
+import Link from 'next/link';
 import { useTheme } from '../context/ThemeContext';
 import { Chat } from '../types';
 
@@ -176,6 +177,15 @@ export default function Sidebar({
 
         {/* Footer Actions */}
         <div className="shrink-0 border-t border-border/60 px-2.5 py-3 space-y-1 bg-bg-sidebar">
+          <Link
+            href="/about"
+            onClick={onClose}
+            className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-[12px] font-medium text-secondary-text hover:text-primary hover:bg-bg-hover transition-all duration-150 focus-visible:outline-none"
+          >
+            <Info className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
+            <span>Tentang Haven</span>
+          </Link>
+
           {chats.length > 0 && (
             <button
               onClick={() => setShowConfirmDelete(true)}
