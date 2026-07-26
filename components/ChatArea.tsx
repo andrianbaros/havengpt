@@ -140,13 +140,13 @@ export default function ChatArea({
         <div className="flex items-center gap-3">
           <button
             onClick={onToggleSidebar}
-            className="rounded-md p-1.5 text-[#64748B] hover:text-[#94A3B8] transition-colors duration-200 md:hidden focus-visible:outline-none"
+            className="shrink-0 rounded-md p-1.5 text-[#64748B] hover:text-[#94A3B8] transition-colors duration-200 md:hidden focus-visible:outline-none"
             aria-label="Toggle sidebar"
           >
             <Menu className="h-4 w-4" strokeWidth={1.75} />
           </button>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 min-w-0">
             <Image
               src="/assets/logo.png"
               alt="KasepGPT"
