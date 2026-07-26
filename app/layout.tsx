@@ -34,7 +34,7 @@ export default function RootLayout({
     <html lang="id" className={`${inter.variable} ${jetbrainsMono.variable} h-full`}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#05070B" />
+        <meta name="theme-color" content="#FFF7FB" />
       </head>
       <body className="h-full antialiased">{children}</body>
     </html>
