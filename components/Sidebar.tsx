@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { Plus, MessageSquare, Trash2, Settings, X, Heart } from 'lucide-react';
+import Image from 'next/image';
+import { Plus, MessageSquare, Trash2, Settings, X } from 'lucide-react';
 import { Chat } from '../types';
 
 interface SidebarProps {
@@ -46,11 +47,15 @@ export default function Sidebar({
         {/* Logo area */}
         <div className="flex h-14 shrink-0 items-center justify-between px-5 border-b border-white/[0.06]">
           <div className="flex items-center gap-2.5">
-            <Heart className="h-4 w-4 text-[#3B82F6]" strokeWidth={1.75} />
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-[13px] font-semibold tracking-tight text-white">KasepGPT</span>
-              <span className="text-[10px] text-[#64748B]">Curhat</span>
-            </div>
+            <Image
+              src="/logo.jpg"
+              alt="KasepGPT"
+              width={28}
+              height={28}
+              className="rounded-lg"
+              priority
+            />
+            <span className="text-[10px] text-[#64748B] tracking-wide">Curhat</span>
           </div>
           <button
             onClick={onClose}

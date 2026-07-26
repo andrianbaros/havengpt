@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useRef, useEffect, useState } from 'react';
+import Image from 'next/image';
 import {
   Send, Menu, ArrowDown, Copy, Check,
   RotateCcw, StopCircle, AlertCircle, ChevronDown, Cpu,
-  MessageCircleHeart, User, Moon
+  MessageCircleHeart, User
 } from 'lucide-react';
 import { Chat } from '../types';
 import MarkdownRenderer from './MarkdownRenderer';
@@ -146,8 +147,14 @@ export default function ChatArea({
           </button>
 
           <div className="flex items-center gap-2">
-            <Moon className="h-3.5 w-3.5 text-[#3B82F6]" strokeWidth={1.5} />
-            <span className="text-[13px] font-semibold tracking-tight text-white">KasepGPT</span>
+            <Image
+              src="/logo.jpg"
+              alt="KasepGPT"
+              width={26}
+              height={26}
+              className="rounded-md"
+              priority
+            />
           </div>
 
           <div className="hidden sm:block h-3.5 w-px bg-white/[0.1]" />
