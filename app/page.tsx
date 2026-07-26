@@ -306,7 +306,7 @@ export default function Home() {
   const activeChat = getActiveChat();
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#05070B]">
+    <div className="flex h-screen w-screen overflow-hidden bg-[#FFF7FB]">
       {/* Sidebar navigation */}
       <Sidebar
         isOpen={sidebarOpen}
