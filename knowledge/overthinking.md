@@ -1,4 +1,4 @@
-# Handling Overthinking — KasepGPT
+# Handling Overthinking — Haven
 
 Overthinking adalah kondisi memikirkan suatu hal secara berulang-ulang tanpa menghasilkan solusi nyata.
 

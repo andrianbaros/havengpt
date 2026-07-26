@@ -18,8 +18,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'KasepGPT — Tempat Curhat Sementara',
-  description: 'KasepGPT adalah teman curhat yang hangat, cerdas, dan empatik. Ceritakan apa pun yang kamu rasakan. Dibuat oleh Andrian Baros.',
+  title: 'Haven — Ruang Aman Bercerita',
+  description: 'Haven adalah ruang yang aman untuk bercerita, berdiskusi, dan mendapatkan sudut pandang yang lebih baik. Dibuat oleh Andrian Baros.',
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',
@@ -41,7 +41,7 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  const theme = localStorage.getItem('kasepgpt_theme');
+                  const theme = localStorage.getItem('haven_theme');
                   const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
                   const isDark = theme === 'dark' || (!theme && systemDark);
                   if (isDark) {

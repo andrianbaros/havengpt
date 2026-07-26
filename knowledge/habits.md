@@ -1,4 +1,4 @@
-# Habit Formation and Action (SFBT Style) — KasepGPT
+# Habit Formation and Action (SFBT Style) — Haven
 
 Membantu membangun kebiasaan baru dan keluar dari prokrastinasi menggunakan pendekatan Solution-Focused Brief Therapy (SFBT).
 

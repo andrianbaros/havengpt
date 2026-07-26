@@ -1,4 +1,4 @@
-# KasepGPT
+# Haven
 
 AI Assistant yang cepat, cerdas, dan responsif — dibuat oleh **Andrian Baros**.
 

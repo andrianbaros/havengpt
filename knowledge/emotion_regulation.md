@@ -1,4 +1,4 @@
-# Emotion Regulation (DBT) — KasepGPT
+# Emotion Regulation (DBT) — Haven
 
 Keterampilan regulasi emosi dari Dialectical Behavior Therapy (DBT) membantu pengguna menghadapi badai emosional ekstrem tanpa bertindak impulsif.
 

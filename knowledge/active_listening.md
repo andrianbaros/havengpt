@@ -1,4 +1,4 @@
-# Active Listening (Person-Centered Therapy) — KasepGPT
+# Active Listening (Person-Centered Therapy) — Haven
 
 Mengadopsi pendekatan konseling Carl Rogers (Person-Centered Therapy) untuk menciptakan ruang aman bagi pengguna.
 

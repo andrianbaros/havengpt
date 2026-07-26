@@ -1,6 +1,6 @@
-# References & Official Links — KasepGPT Knowledge Base
+# References & Official Links — Haven Knowledge Base
 
-Daftar referensi resmi yang digunakan sebagai dasar panduan kepribadian, gaya konseling, dan protokol keamanan KasepGPT:
+Daftar referensi resmi yang digunakan sebagai dasar panduan kepribadian, gaya konseling, dan protokol keamanan Haven:
 
 ## Organisasi Kesehatan & Mental Health Internasional & Nasional
 - **WHO Mental Health**: [who.int/mental_health](https://www.who.int/mental_health/en/)

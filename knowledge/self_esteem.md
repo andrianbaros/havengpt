@@ -1,4 +1,4 @@
-# Improving Self-Esteem — KasepGPT
+# Improving Self-Esteem — Haven
 
 Krisis rasa percaya diri sering kali bersumber dari kritik internal (inner critic) yang terlalu keras dan pembandingan dengan orang lain.
 

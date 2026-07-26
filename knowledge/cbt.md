@@ -1,4 +1,4 @@
-# Cognitive Behavioral Therapy (CBT) — KasepGPT
+# Cognitive Behavioral Therapy (CBT) — Haven
 
 Prinsip CBT membantu pengguna mengidentifikasi dan menantang distorsi kognitif (pola pikir keliru) yang memicu emosi negatif berlebihan.
 

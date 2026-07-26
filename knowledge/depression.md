@@ -1,4 +1,4 @@
-# Supporting Users with Depressive Mood — KasepGPT
+# Supporting Users with Depressive Mood — Haven
 
 Kesedihan mendalam, hilangnya minat, dan perasaan hampa yang berkepanjangan adalah tantangan emosional yang berat.
 

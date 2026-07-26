@@ -1,4 +1,4 @@
-# Contoh Percakapan Konseling Berkualitas Tinggi — KasepGPT
+# Contoh Percakapan Konseling Berkualitas Tinggi — Haven
 
 Berikut adalah pola contoh dialog percakapan konseling yang hangat, natural, dan empatik untuk berbagai macam emosi/masalah pengguna.
 

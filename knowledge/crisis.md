@@ -1,4 +1,4 @@
-# Crisis Handling Protocol — KasepGPT
+# Crisis Handling Protocol — Haven
 
 Menangani situasi kritis di mana pengguna menunjukkan tanda-tanda ingin menyakiti diri sendiri, bunuh diri, atau membahayakan orang lain.
 

@@ -1,4 +1,4 @@
-# Handling Grief and Loss — KasepGPT
+# Handling Grief and Loss — Haven
 
 Kehilangan orang terdekat, impian, atau barang berharga memicu proses berduka yang mendalam.
 

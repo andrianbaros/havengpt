@@ -1,4 +1,4 @@
-# Motivational Interviewing (MI) — KasepGPT
+# Motivational Interviewing (MI) — Haven
 
 Prinsip MI digunakan untuk membantu pengguna mengatasi ambivalensi (kebingungan/keraguan) dan membangun motivasi internal untuk berubah.
 

@@ -84,19 +84,19 @@ export async function POST(req: NextRequest) {
     // ── 1. Try primary ─────────────────────────────
     if (primary.key) {
       try {
-        console.log(`[KasepGPT] Primary → ${primary.name} / ${primary.model}`);
+        console.log(`[Haven] Primary → ${primary.name} / ${primary.model}`);
         const res = await callProvider(primary.url, primary.key, primary.model, formattedMessages, temperature, maxTokens);
         if (res.ok) {
           response = res;
         } else {
           const txt = await res.text().catch(() => '');
-          console.warn(`[KasepGPT] Primary (${primary.name}) failed — ${res.status}: ${txt}`);
+          console.warn(`[Haven] Primary (${primary.name}) failed — ${res.status}: ${txt}`);
         }
       } catch (err) {
-        console.warn(`[KasepGPT] Primary (${primary.name}) threw:`, err);
+        console.warn(`[Haven] Primary (${primary.name}) threw:`, err);
       }
     } else {
-      console.warn(`[KasepGPT] Primary key for ${primary.name} is missing. Skipping to fallback.`);
+      console.warn(`[Haven] Primary key for ${primary.name} is missing. Skipping to fallback.`);
     }
 
     // ── 2. Try fallback ────────────────────────────
@@ -108,7 +108,7 @@ export async function POST(req: NextRequest) {
         );
       }
 
-      console.log(`[KasepGPT] Fallback → ${fallback.name} / ${fallback.model}`);
+      console.log(`[Haven] Fallback → ${fallback.name} / ${fallback.model}`);
       const res = await callProvider(fallback.url, fallback.key, fallback.model, formattedMessages, temperature, maxTokens);
       if (!res.ok) {
         const txt = await res.text().catch(() => '');
@@ -133,7 +133,7 @@ export async function POST(req: NextRequest) {
     });
 
   } catch (error: unknown) {
-    console.error('[KasepGPT] Unhandled error in chat route:', error);
+    console.error('[Haven] Unhandled error in chat route:', error);
     const msg = error instanceof Error ? error.message : 'Internal server error.';
     return NextResponse.json({ error: msg }, { status: 500 });
   }

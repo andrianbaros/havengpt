@@ -66,7 +66,7 @@ function readKnowledgeFile(fileName: string): string {
       return fs.readFileSync(filePath, 'utf-8');
     }
   } catch (err) {
-    console.error(`[KasepGPT] Error reading knowledge file ${fileName}:`, err);
+    console.error(`[Haven] Error reading knowledge file ${fileName}:`, err);
   }
   return '';
 }
@@ -110,7 +110,7 @@ function getMatchedExamples(matchedFiles: string[]): string {
       return `\n\n### CONTOH RESPONS DIALOG YANG RELEVAN:\n\n${matchedSections.join('\n')}`;
     }
   } catch (err) {
-    console.error('[KasepGPT] Error reading counseling examples:', err);
+    console.error('[Haven] Error reading counseling examples:', err);
   }
   return '';
 }

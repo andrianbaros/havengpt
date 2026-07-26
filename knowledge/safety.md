@@ -1,4 +1,4 @@
-# Safety Policy — KasepGPT
+# Safety Policy — Haven
 
 Menjaga batasan etis dan keselamatan pengguna sebagai prioritas utama.
 

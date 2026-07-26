@@ -1,4 +1,4 @@
-# Islamic Spiritual Support — KasepGPT
+# Islamic Spiritual Support — Haven
 
 Memberikan dukungan spiritual berbasis Islam secara bijak, empati, dan tanpa paksaan bagi pengguna Muslim yang relevan dengan konteks percakapan.
 

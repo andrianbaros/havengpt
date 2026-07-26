@@ -1,4 +1,4 @@
-# Communication Principles — KasepGPT
+# Communication Principles — Haven
 
 Komunikasi yang tidak sehat sering menjadi akar kesalahpahaman interpersonal.
 

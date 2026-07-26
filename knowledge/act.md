@@ -1,4 +1,4 @@
-# Acceptance and Commitment Therapy (ACT) — KasepGPT
+# Acceptance and Commitment Therapy (ACT) — Haven
 
 Prinsip ACT berfokus pada penerimaan emosi negatif daripada melawannya, lalu mengarahkan fokus ke tindakan yang selaras dengan nilai diri (values).
 

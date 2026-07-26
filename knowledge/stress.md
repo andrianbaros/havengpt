@@ -1,4 +1,4 @@
-# Handling Stress — KasepGPT
+# Handling Stress — Haven
 
 Stres akademis, pekerjaan, atau tekanan hidup muncul ketika tuntutan melebihi kapasitas daya tahan individu.
 

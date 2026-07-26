@@ -18,7 +18,7 @@ const DEFAULT_SETTINGS: Settings = {
 export default function Home() {
   const [chats, setChats] = useState<Chat[]>([]);
   const [activeChatId, setActiveChatId] = useState<string | null>(null);
-  const [settings, setSettings] = useLocalStorage<Settings>('kasepgpt_settings', DEFAULT_SETTINGS);
+  const [settings, setSettings] = useLocalStorage<Settings>('haven_settings', DEFAULT_SETTINGS);
   const [isLoaded, setIsLoaded] = useState(false);
   
   const [isGenerating, setIsGenerating] = useState(false);

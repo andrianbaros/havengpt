@@ -33,20 +33,24 @@ const CEREBRAS_MODELS = ['gpt-oss-120b'];
 
 const SUGGESTIONS = [
   {
-    label: 'Aku merasa sangat capek dan kewalahan hari ini...',
-    description: 'Bicarakan beban pikiranmu secara santai',
+    label: 'Aku sedang overthinking.',
+    description: 'Bicarakan kecemasan dan tenangkan pikiranmu',
   },
   {
-    label: 'Kenapa ya aku sering overthinking hal kecil?',
-    description: 'Urai kecemasan dan pola pikir bersama',
+    label: 'Aku lagi capek.',
+    description: 'Bagikan rasa lelahmu untuk melepas beban hari ini',
   },
   {
-    label: 'Aku lagi bingung harus ambil keputusan apa...',
-    description: 'Temukan perspektif baru dari sudut pandang jernih',
+    label: 'Aku bingung mengambil keputusan.',
+    description: 'Urai pilihan yang ada dan temukan kejelasan',
   },
   {
-    label: 'Cuma butuh seseorang yang mau mendengarkan...',
-    description: 'Curahkan segalanya tanpa dihakimi',
+    label: 'Aku ingin cerita tentang hubungan.',
+    description: 'Diskusikan dinamika hubungan dengan orang terdekat',
+  },
+  {
+    label: 'Aku hanya butuh seseorang untuk mendengarkan.',
+    description: 'Tumpahkan isi hati tanpa takut dihakimi',
   },
 ];
 
@@ -145,7 +149,7 @@ export default function ChatArea({
             <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-bg-hover text-primary">
               <Heart className="h-4 w-4 fill-primary/10" strokeWidth={2} />
             </div>
-            <span className="text-[14px] font-bold tracking-tight text-foreground">KasepGPT</span>
+            <span className="text-[14px] font-bold tracking-tight text-foreground">Haven</span>
           </div>
         </div>
 
@@ -181,10 +185,10 @@ export default function ChatArea({
               Ruang Aman & Tenang
             </p>
             <h1 className="mb-3 text-[24px] font-bold tracking-tight text-foreground">
-              Tempat Curhat Sementara
+              Welcome to Haven
             </h1>
             <p className="mb-10 max-w-md text-[13.5px] leading-relaxed text-secondary-text">
-              Ceritakan apa pun yang sedang kamu rasakan. Aku akan mendengarkan dan mencoba membantu sebaik mungkin.
+              Ceritakan apa pun yang sedang kamu rasakan. Haven akan mendengarkan dan membantu menemukan sudut pandang yang lebih baik.
             </p>
 
             {/* Suggestion Cards */}

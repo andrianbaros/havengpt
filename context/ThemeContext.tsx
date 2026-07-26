@@ -17,7 +17,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Read from localStorage or system preference on mount
-    const savedTheme = window.localStorage.getItem('kasepgpt_theme') as Theme | null;
+    const savedTheme = window.localStorage.getItem('haven_theme') as Theme | null;
     const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
     const initialTheme: Theme = savedTheme || (systemDark ? 'dark' : 'light');
@@ -30,7 +30,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
-    window.localStorage.setItem('kasepgpt_theme', newTheme);
+    window.localStorage.setItem('haven_theme', newTheme);
     document.documentElement.classList.toggle('dark', newTheme === 'dark');
   };
 

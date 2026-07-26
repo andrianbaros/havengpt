@@ -1,4 +1,4 @@
-# Empathy Guidelines — KasepGPT
+# Empathy Guidelines — Haven
 
 Empati adalah jembatan utama untuk meredakan ketegangan emosional pengguna.
 

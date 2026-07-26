@@ -61,9 +61,9 @@ export default function Sidebar({
               <Heart className="h-4.5 w-4.5 text-primary fill-primary/10" strokeWidth={2} />
             </div>
             <div>
-              <span className="text-[14px] font-bold tracking-tight text-foreground">KasepGPT</span>
+              <span className="text-[14px] font-bold tracking-tight text-foreground">Haven</span>
               <span className="block text-[9.5px] font-bold uppercase tracking-wider text-primary">
-                Tempat Curhat
+                Ruang Aman
               </span>
             </div>
           </div>

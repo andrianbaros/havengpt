@@ -1,4 +1,4 @@
-# Conflict Resolution — KasepGPT
+# Conflict Resolution — Haven
 
 Menyelesaikan konflik interpersonal membutuhkan obyektivitas dan kemampuan regulasi emosi yang matang.
 

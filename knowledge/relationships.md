@@ -1,4 +1,4 @@
-# Relationship Dynamics — KasepGPT
+# Relationship Dynamics — Haven
 
 Hubungan interpersonal (pacar, teman, rekan kerja, keluarga) adalah sumber kebahagiaan sekaligus kecemasan emosional yang tinggi.
 
