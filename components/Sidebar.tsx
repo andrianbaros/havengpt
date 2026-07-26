@@ -40,8 +40,8 @@ export default function Sidebar({
 
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-64 flex-col border-r border-white/[0.06] bg-[#080C14] transition-transform duration-[250ms] ease-in-out md:static md:translate-x-0 ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
+        className={`fixed inset-y-0 left-0 z-50 flex w-64 shrink-0 flex-col border-r border-white/[0.06] bg-[#080C14] transition-all duration-[250ms] ease-in-out md:relative ${
+          isOpen ? 'translate-x-0 md:ml-0' : '-translate-x-full md:translate-x-0 md:-ml-64'
         }`}
       >
         {/* Logo area */}

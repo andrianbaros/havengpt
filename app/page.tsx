@@ -20,9 +20,16 @@ export default function Home() {
   const [settings, setSettings] = useLocalStorage<Settings>('kasepgpt_settings', DEFAULT_SETTINGS);
   
   const [isGenerating, setIsGenerating] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [toast, setToast] = useState<ToastMessage | null>(null);
+
+  // Auto-close sidebar on mobile on initial load
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      setSidebarOpen(false);
+    }
+  }, []);
 
   const abortControllerRef = useRef<AbortController | null>(null);
 
