@@ -50,9 +50,9 @@ export default function Sidebar({
             <Image
               src="/assets/logo.png"
               alt="KasepGPT"
-              width={28}
-              height={28}
-              className="rounded-lg"
+              width={36}
+              height={36}
+              className="rounded-xl"
               priority
             />
             <span className="text-[10px] text-[#64748B] tracking-wide">Curhat</span>
