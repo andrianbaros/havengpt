@@ -26,6 +26,8 @@ export default function Home() {
     }
     return true;
   });
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [toast, setToast] = useState<ToastMessage | null>(null);
 
   const abortControllerRef = useRef<AbortController | null>(null);
 
