@@ -152,7 +152,7 @@ export default function ChatArea({
               alt="KasepGPT"
               width={200}
               height={62}
-              className="object-contain"
+              className="w-[140px] sm:w-[200px] h-auto object-contain"
               priority
             />
           </div>
@@ -317,17 +317,17 @@ export default function ChatArea({
       {/* ── Input panel ──────────────────────────────── */}
       <div className="shrink-0 border-t border-white/[0.06] bg-[#05070B] px-4 pb-6 pt-4 md:px-8">
         <div className="mx-auto max-w-2xl">
-          <div className="flex items-end gap-3 rounded-2xl border border-white/[0.09] bg-[#0B1220] px-4 py-3.5 transition-all duration-250 focus-within:border-[#2563EB]/40 focus-within:shadow-[0_0_0_3px_rgba(37,99,235,0.08)]">
+          <div className="flex flex-col sm:flex-row sm:items-end gap-3 sm:gap-3 rounded-2xl border border-white/[0.09] bg-[#0B1220] px-4 py-3.5 transition-all duration-250 focus-within:border-[#2563EB]/40 focus-within:shadow-[0_0_0_3px_rgba(37,99,235,0.08)]">
             
-            {/* Model selector (Left of textarea) */}
-            <div className="relative mb-0.5 shrink-0" ref={dropdownRef}>
+            {/* Model selector */}
+            <div className="relative sm:mb-0.5 shrink-0" ref={dropdownRef}>
               <button
                 onClick={() => setModelDropdownOpen(v => !v)}
                 className="flex h-7 items-center gap-1.5 rounded-lg px-2.5 text-[11px] font-medium text-[#64748B] hover:text-[#94A3B8] hover:bg-white/[0.06] transition-all duration-200 focus-visible:outline-none"
                 aria-label="Pilih model AI"
               >
                 <Cpu className="h-3 w-3 shrink-0" strokeWidth={1.5} />
-                <span className="max-w-[70px] truncate sm:max-w-none">{displayLabel}</span>
+                <span className="truncate">{displayLabel}</span>
                 <ChevronDown
                   className={`h-2.5 w-2.5 opacity-70 transition-transform duration-200 ${modelDropdownOpen ? 'rotate-180' : ''}`}
                   strokeWidth={2}
@@ -371,9 +371,11 @@ export default function ChatArea({
               )}
             </div>
 
-            <div className="mb-0.5 h-6 w-px bg-white/[0.06] shrink-0" />
+            <div className="hidden sm:block mb-0.5 h-6 w-px bg-white/[0.06] shrink-0" />
+            <div className="sm:hidden h-px w-full bg-white/[0.06] shrink-0" />
 
-            <textarea
+            <div className="flex flex-1 items-end gap-3 w-full">
+              <textarea
               ref={textareaRef}
               rows={1}
               value={input}
@@ -383,18 +385,19 @@ export default function ChatArea({
               className="flex-1 resize-none bg-transparent text-[13.5px] leading-[1.7] text-white placeholder-[#475569] outline-none scrollbar-none max-h-48 overflow-y-auto py-0.5"
             />
 
-            <button
-              onClick={handleSend}
-              disabled={!input.trim() || isGenerating}
-              className={`mb-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition-all duration-200 focus-visible:outline-none ${
-                input.trim() && !isGenerating
-                  ? 'bg-[#2563EB] text-white hover:bg-[#1D4ED8] active:scale-95'
-                  : 'bg-white/[0.06] text-[#475569] cursor-not-allowed'
-              }`}
-              aria-label="Kirim pesan"
-            >
-              <Send className="h-3.5 w-3.5" strokeWidth={1.75} />
-            </button>
+              <button
+                onClick={handleSend}
+                disabled={!input.trim() || isGenerating}
+                className={`mb-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition-all duration-200 focus-visible:outline-none ${
+                  input.trim() && !isGenerating
+                    ? 'bg-[#2563EB] text-white hover:bg-[#1D4ED8] active:scale-95'
+                    : 'bg-white/[0.06] text-[#475569] cursor-not-allowed'
+                }`}
+                aria-label="Kirim pesan"
+              >
+                <Send className="h-3.5 w-3.5" strokeWidth={1.75} />
+              </button>
+            </div>
           </div>
 
           <p className="mt-2.5 text-center text-[11px] text-[#475569]">
