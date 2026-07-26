@@ -6,10 +6,10 @@ import { ArrowLeft, Shield, AlertTriangle, Heart } from 'lucide-react';
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground transition-colors duration-200 overflow-y-auto scrollbar-thin">
+    <div className="h-screen w-screen bg-background text-foreground transition-colors duration-200 overflow-y-auto scrollbar-thin flex flex-col">
       
       {/* Container */}
-      <div className="mx-auto max-w-2xl px-6 py-12 md:py-20 flex flex-col min-h-screen justify-between">
+      <div className="mx-auto max-w-2xl w-full px-6 py-12 md:py-20 flex flex-col justify-between gap-12">
         
         {/* Main Content Area */}
         <div className="space-y-12">
