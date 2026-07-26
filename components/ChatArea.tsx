@@ -126,26 +126,26 @@ export default function ChatArea({
   };
 
   return (
-    <div className="relative flex flex-1 flex-col bg-[#FFF7FB] overflow-hidden">
+    <div className="relative flex flex-1 flex-col bg-background overflow-hidden">
 
       {/* ── Header ─────────────────────────────────── */}
-      <header className="flex h-16 shrink-0 items-center justify-between border-b border-[#F3D4E6]/70 bg-[#FFF7FB]/80 backdrop-blur-md px-4 md:px-6">
+      <header className="flex h-16 shrink-0 items-center justify-between border-b border-border/70 bg-background/80 backdrop-blur-md px-4 md:px-6">
 
         {/* Left: Menu & Brand */}
         <div className="flex items-center gap-3">
           <button
             onClick={onToggleSidebar}
-            className="shrink-0 rounded-xl p-2 text-[#6B7280] hover:bg-[#FFF0F7] hover:text-[#1F2937] transition-all duration-150 focus-visible:outline-none"
+            className="shrink-0 rounded-xl p-2 text-secondary-text hover:bg-bg-hover hover:text-foreground transition-all duration-150 focus-visible:outline-none"
             aria-label="Toggle sidebar"
           >
             <Menu className="h-4.5 w-4.5" strokeWidth={2} />
           </button>
 
           <div className="flex items-center gap-2.5">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#FCE7F3] text-[#EC4899]">
-              <Heart className="h-4 w-4 fill-[#FCE7F3]" strokeWidth={2} />
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-bg-hover text-primary">
+              <Heart className="h-4 w-4 fill-primary/10" strokeWidth={2} />
             </div>
-            <span className="text-[14px] font-bold tracking-tight text-[#1F2937]">KasepGPT</span>
+            <span className="text-[14px] font-bold tracking-tight text-foreground">KasepGPT</span>
           </div>
         </div>
 
@@ -153,7 +153,7 @@ export default function ChatArea({
         {isGenerating && (
           <button
             onClick={onStopGeneration}
-            className="flex items-center gap-1.5 rounded-xl border border-[#FCA5A5]/40 bg-[#FEF2F2] px-3 py-1.5 text-[12px] font-semibold text-[#EF4444] hover:bg-[#FEE2E2] active:scale-[0.98] transition-all duration-150 focus-visible:outline-none"
+            className="flex items-center gap-1.5 rounded-xl border border-red-500/20 bg-red-500/10 px-3 py-1.5 text-[12px] font-semibold text-red-500 hover:bg-red-500/20 active:scale-[0.98] transition-all duration-150 focus-visible:outline-none"
           >
             <StopCircle className="h-3.5 w-3.5" strokeWidth={2} />
             Hentikan
@@ -169,21 +169,21 @@ export default function ChatArea({
       >
         {messages.length === 0 ? (
 
-          /* ── Welcome / Curhat Screen ── */
+          /* ── Welcome Screen ── */
           <div className="mx-auto flex max-w-lg flex-col items-center px-4 pt-16 pb-14 text-center animate-fade-in">
 
-            {/* Glowing Pink Badge */}
-            <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white border border-[#F3D4E6] shadow-[0_8px_24px_rgba(236,72,153,0.12)]">
-              <MessageCircleHeart className="h-7 w-7 text-[#EC4899]" strokeWidth={1.75} />
+            {/* Glowing Icon Badge */}
+            <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-bg-card border border-border shadow-sm">
+              <MessageCircleHeart className="h-7 w-7 text-primary" strokeWidth={1.75} />
             </div>
 
-            <p className="mb-2 text-[11px] font-bold uppercase tracking-widest text-[#EC4899]">
+            <p className="mb-2 text-[11px] font-bold uppercase tracking-widest text-primary">
               Ruang Aman & Tenang
             </p>
-            <h1 className="mb-3 text-[24px] font-bold tracking-tight text-[#1F2937]">
+            <h1 className="mb-3 text-[24px] font-bold tracking-tight text-foreground">
               Tempat Curhat Sementara
             </h1>
-            <p className="mb-10 max-w-md text-[13.5px] leading-relaxed text-[#6B7280]">
+            <p className="mb-10 max-w-md text-[13.5px] leading-relaxed text-secondary-text">
               Ceritakan apa pun yang sedang kamu rasakan. Aku akan mendengarkan dan mencoba membantu sebaik mungkin.
             </p>
 
@@ -193,14 +193,14 @@ export default function ChatArea({
                 <button
                   key={i}
                   onClick={() => !isGenerating && onSendMessage(s.label)}
-                  className="group flex items-start gap-3.5 rounded-2xl border border-[#F3D4E6] bg-white p-4 text-left shadow-[0_2px_10px_rgba(236,72,153,0.04)] hover:border-[#EC4899]/50 hover:shadow-[0_8px_24px_rgba(236,72,153,0.1)] active:scale-[0.99] transition-all duration-200 focus-visible:outline-none"
+                  className="group flex items-start gap-3.5 rounded-2xl border border-border bg-bg-card p-4 text-left shadow-sm hover:border-primary/50 hover:bg-bg-hover/30 hover:shadow-md active:scale-[0.99] transition-all duration-200 focus-visible:outline-none"
                 >
-                  <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-[#F472B6] group-hover:bg-[#EC4899] group-hover:scale-125 transition-all duration-200" />
+                  <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-accent group-hover:bg-primary group-hover:scale-125 transition-all duration-200" />
                   <div className="flex-1">
-                    <p className="text-[13px] font-semibold text-[#1F2937] group-hover:text-[#EC4899] transition-colors duration-200">
+                    <p className="text-[13px] font-semibold text-foreground group-hover:text-primary transition-colors duration-200">
                       {s.label}
                     </p>
-                    <p className="mt-0.5 text-[11.5px] text-[#6B7280]">
+                    <p className="mt-0.5 text-[11.5px] text-secondary-text">
                       {s.description}
                     </p>
                   </div>
@@ -221,24 +221,24 @@ export default function ChatArea({
                   className={`flex items-start gap-3.5 message-enter ${isUser ? 'flex-row-reverse' : 'flex-row'}`}
                 >
                   {/* Avatar */}
-                  <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-[#F3D4E6] shadow-sm ${
-                    isUser ? 'bg-[#FFF0F7]' : 'bg-white'
+                  <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-border shadow-sm ${
+                    isUser ? 'bg-bg-hover' : 'bg-bg-card'
                   }`}>
                     {isUser
-                      ? <User className="h-4 w-4 text-[#6B7280]" strokeWidth={1.75} />
-                      : <Heart className="h-4 w-4 text-[#EC4899] fill-[#FCE7F3]" strokeWidth={1.75} />
+                      ? <User className="h-4 w-4 text-secondary-text" strokeWidth={1.75} />
+                      : <Heart className="h-4 w-4 text-primary fill-primary/10" strokeWidth={1.75} />
                     }
                   </div>
 
                   {/* Content Bubble */}
                   <div className={`group relative flex-1 max-w-[85%] rounded-2xl p-4 transition-all duration-150 ${
                     isUser
-                      ? 'bg-[#FCE7F3] border border-[#FBCFE8] text-[#1F2937] rounded-tr-none shadow-[0_2px_8px_rgba(236,72,153,0.06)]'
-                      : 'bg-white border border-[#F3D4E6] text-[#1F2937] rounded-tl-none shadow-[0_4px_16px_rgba(236,72,153,0.05)]'
+                      ? 'bg-bg-hover border border-border/40 text-foreground rounded-tr-none shadow-sm'
+                      : 'bg-bg-card border border-border text-foreground rounded-tl-none shadow-sm'
                   }`}>
 
                     {message.error && (
-                      <div className="mb-2.5 flex items-center gap-2 rounded-xl bg-[#FEF2F2] border border-[#FCA5A5]/40 px-3 py-1.5 text-[12px] font-medium text-[#EF4444]">
+                      <div className="mb-2.5 flex items-center gap-2 rounded-xl bg-red-500/10 border border-red-500/20 px-3 py-1.5 text-[12px] font-medium text-red-500">
                         <AlertCircle className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
                         <span>Gagal mendapatkan respon</span>
                       </div>
@@ -250,19 +250,19 @@ export default function ChatArea({
                       </ReactMarkdown>
                     </div>
 
-                    {/* Copy & Regenerate Actions */}
+                    {/* Actions */}
                     <div className={`mt-2 flex items-center gap-2 border-t pt-2 transition-opacity duration-150 ${
-                      isUser ? 'border-[#FBCFE8]/60 justify-end' : 'border-[#F3D4E6]/60 justify-between'
+                      isUser ? 'border-border/30 justify-end' : 'border-border/60 justify-between'
                     }`}>
                       <button
                         onClick={() => handleCopy(message.content, message.id)}
-                        className="flex items-center gap-1 text-[11px] font-medium text-[#6B7280] hover:text-[#EC4899] transition-colors duration-150"
+                        className="flex items-center gap-1 text-[11px] font-medium text-secondary-text hover:text-primary transition-colors duration-150"
                         title="Salin isi pesan"
                       >
                         {copiedId === message.id ? (
                           <>
-                            <Check className="h-3 w-3 text-[#10B981]" strokeWidth={2} />
-                            <span className="text-[#10B981]">Tersalin</span>
+                            <Check className="h-3 w-3 text-emerald-500" strokeWidth={2} />
+                            <span className="text-emerald-500">Tersalin</span>
                           </>
                         ) : (
                           <>
@@ -276,7 +276,7 @@ export default function ChatArea({
                         <button
                           onClick={onRegenerateMessage}
                           disabled={isGenerating}
-                          className="flex items-center gap-1 text-[11px] font-medium text-[#6B7280] hover:text-[#EC4899] transition-colors duration-150 disabled:opacity-40"
+                          className="flex items-center gap-1 text-[11px] font-medium text-secondary-text hover:text-primary transition-colors duration-150 disabled:opacity-40"
                           title="Coba tanggapi lagi"
                         >
                           <RotateCcw className="h-3 w-3" strokeWidth={1.75} />
@@ -292,14 +292,14 @@ export default function ChatArea({
             {/* AI Streaming Indicator */}
             {isGenerating && (
               <div className="flex items-start gap-3.5 animate-fade-in">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-[#F3D4E6] bg-white shadow-sm">
-                  <Heart className="h-4 w-4 text-[#EC4899] animate-pulse" strokeWidth={1.75} />
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl border border-border bg-bg-card shadow-sm">
+                  <Heart className="h-4 w-4 text-primary animate-pulse" strokeWidth={1.75} />
                 </div>
-                <div className="rounded-2xl border border-[#F3D4E6] bg-white px-4 py-3 shadow-[0_4px_16px_rgba(236,72,153,0.05)]">
+                <div className="rounded-2xl border border-border bg-bg-card px-4 py-3 shadow-sm">
                   <div className="flex items-center gap-1.5">
-                    <span className="h-2 w-2 rounded-full bg-[#EC4899] animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="h-2 w-2 rounded-full bg-[#F472B6] animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <span className="h-2 w-2 rounded-full bg-[#FBCFE8] animate-bounce" style={{ animationDelay: '300ms' }} />
+                    <span className="h-2 w-2 rounded-full bg-primary animate-bounce" style={{ animationDelay: '0ms' }} />
+                    <span className="h-2 w-2 rounded-full bg-accent animate-bounce" style={{ animationDelay: '150ms' }} />
+                    <span className="h-2 w-2 rounded-full bg-border animate-bounce" style={{ animationDelay: '300ms' }} />
                   </div>
                 </div>
               </div>
@@ -312,7 +312,7 @@ export default function ChatArea({
       {showScrollBottom && (
         <button
           onClick={() => scrollToBottom('smooth')}
-          className="absolute bottom-28 right-6 z-30 flex h-9 w-9 items-center justify-center rounded-full border border-[#F3D4E6] bg-white text-[#EC4899] shadow-lg hover:scale-105 active:scale-95 transition-all duration-150"
+          className="absolute bottom-28 right-6 z-30 flex h-9 w-9 items-center justify-center rounded-full border border-border bg-bg-card text-primary shadow-md hover:scale-105 active:scale-95 transition-all duration-150"
           aria-label="Scroll ke bawah"
         >
           <ArrowDown className="h-4 w-4" strokeWidth={2} />
@@ -320,15 +320,15 @@ export default function ChatArea({
       )}
 
       {/* ── Input panel ──────────────────────────────── */}
-      <div className="shrink-0 border-t border-[#F3D4E6]/60 bg-[#FFF7FB] px-4 pb-6 pt-3 md:px-8">
+      <div className="shrink-0 border-t border-border/60 bg-background px-4 pb-6 pt-3 md:px-8">
         <div className="mx-auto max-w-2xl">
-          <div className="flex flex-col sm:flex-row sm:items-end gap-2.5 rounded-2xl border border-[#F3D4E6] bg-white p-3 shadow-[0_4px_20px_rgba(236,72,153,0.06)] transition-all duration-200 focus-within:border-[#EC4899]/50 focus-within:shadow-[0_0_0_4px_rgba(236,72,153,0.12)]">
+          <div className="flex flex-col sm:flex-row sm:items-end gap-2.5 rounded-2xl border border-border bg-bg-card p-3 shadow-sm transition-all duration-200 focus-within:border-primary/50 focus-within:shadow-glow">
             
             {/* Model Selector Dropdown */}
             <div className="relative shrink-0" ref={dropdownRef}>
               <button
                 onClick={() => setModelDropdownOpen(v => !v)}
-                className="flex h-7 items-center gap-1.5 rounded-xl bg-[#FFF0F7] px-2.5 text-[11px] font-semibold text-[#EC4899] hover:bg-[#FCE7F3] transition-all duration-150 focus-visible:outline-none"
+                className="flex h-7 items-center gap-1.5 rounded-xl bg-bg-hover px-2.5 text-[11px] font-semibold text-primary hover:bg-bg-hover/80 transition-all duration-150 focus-visible:outline-none"
                 aria-label="Pilih model AI"
               >
                 <Cpu className="h-3 w-3 shrink-0" strokeWidth={1.75} />
@@ -340,44 +340,44 @@ export default function ChatArea({
               </button>
 
               {modelDropdownOpen && (
-                <div className="absolute left-0 bottom-full mb-2 z-50 w-52 animate-fade-in-up rounded-2xl border border-[#F3D4E6] bg-white py-2 shadow-[0_12px_32px_rgba(236,72,153,0.15)] origin-bottom-left">
+                <div className="absolute left-0 bottom-full mb-2 z-50 w-52 animate-fade-in-up rounded-2xl border border-border bg-bg-card py-2 shadow-lg origin-bottom-left">
                   <div className="px-3 pb-1 pt-1">
-                    <span className="text-[9.5px] font-bold uppercase tracking-widest text-[#EC4899]">Bynara (Utama)</span>
+                    <span className="text-[9.5px] font-bold uppercase tracking-widest text-primary">Bynara (Utama)</span>
                   </div>
                   {BYNARA_MODELS.map(m => (
                     <button
                       key={m}
                       onClick={() => { onChangeModel(m); setModelDropdownOpen(false); }}
-                      className={`flex w-full items-center justify-between px-3 py-2 text-[12.5px] font-medium transition-colors duration-150 hover:bg-[#FFF0F7] focus-visible:outline-none ${
-                        modelName === m ? 'text-[#EC4899] font-bold' : 'text-[#4B5563]'
+                      className={`flex w-full items-center justify-between px-3 py-2 text-[12.5px] font-medium transition-colors duration-150 hover:bg-bg-hover focus-visible:outline-none ${
+                        modelName === m ? 'text-primary font-bold' : 'text-foreground'
                       }`}
                     >
                       {MODEL_LABELS[m] || m}
-                      {modelName === m && <div className="h-1.5 w-1.5 rounded-full bg-[#EC4899]" />}
+                      {modelName === m && <div className="h-1.5 w-1.5 rounded-full bg-primary" />}
                     </button>
                   ))}
-                  <div className="mx-3 my-1 border-t border-[#F3D4E6]" />
+                  <div className="mx-3 my-1 border-t border-border" />
                   <div className="px-3 pb-1 pt-1">
-                    <span className="text-[9.5px] font-bold uppercase tracking-widest text-[#9CA3AF]">Cerebras (Cadangan)</span>
+                    <span className="text-[9.5px] font-bold uppercase tracking-widest text-text-muted">Cerebras (Cadangan)</span>
                   </div>
                   {CEREBRAS_MODELS.map(m => (
                     <button
                       key={m}
                       onClick={() => { onChangeModel(m); setModelDropdownOpen(false); }}
-                      className={`flex w-full items-center justify-between px-3 py-2 text-[12.5px] font-medium transition-colors duration-150 hover:bg-[#FFF0F7] focus-visible:outline-none ${
-                        modelName === m ? 'text-[#EC4899] font-bold' : 'text-[#4B5563]'
+                      className={`flex w-full items-center justify-between px-3 py-2 text-[12.5px] font-medium transition-colors duration-150 hover:bg-bg-hover focus-visible:outline-none ${
+                        modelName === m ? 'text-primary font-bold' : 'text-foreground'
                       }`}
                     >
                       {MODEL_LABELS[m] || m}
-                      {modelName === m && <div className="h-1.5 w-1.5 rounded-full bg-[#EC4899]" />}
+                      {modelName === m && <div className="h-1.5 w-1.5 rounded-full bg-primary" />}
                     </button>
                   ))}
                 </div>
               )}
             </div>
 
-            <div className="hidden sm:block mb-1 h-5 w-px bg-[#F3D4E6] shrink-0" />
-            <div className="sm:hidden h-px w-full bg-[#F3D4E6]" />
+            <div className="hidden sm:block mb-1 h-5 w-px bg-border shrink-0" />
+            <div className="sm:hidden h-px w-full bg-border" />
 
             {/* Textarea & Send button */}
             <div className="flex flex-1 items-end gap-2.5 w-full">
@@ -388,7 +388,7 @@ export default function ChatArea({
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Tulis cerita atau isi pikiranmu..."
-                className="flex-1 resize-none bg-transparent text-[13.5px] leading-relaxed text-[#1F2937] placeholder-[#9CA3AF] outline-none scrollbar-none max-h-40 overflow-y-auto py-0.5"
+                className="flex-1 resize-none bg-transparent text-[13.5px] leading-relaxed text-foreground placeholder-text-muted outline-none scrollbar-none max-h-40 overflow-y-auto py-0.5"
               />
 
               <button
@@ -396,8 +396,8 @@ export default function ChatArea({
                 disabled={!input.trim() || isGenerating}
                 className={`mb-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-all duration-200 focus-visible:outline-none ${
                   input.trim() && !isGenerating
-                    ? 'bg-[#EC4899] text-white shadow-[0_2px_10px_rgba(236,72,153,0.3)] hover:bg-[#DB2777] active:scale-95'
-                    : 'bg-[#FFF0F7] text-[#9CA3AF] cursor-not-allowed'
+                    ? 'bg-primary text-white shadow-md hover:bg-primary-hover active:scale-95'
+                    : 'bg-bg-hover text-text-muted cursor-not-allowed'
                 }`}
                 aria-label="Kirim pesan"
               >
@@ -406,7 +406,7 @@ export default function ChatArea({
             </div>
           </div>
 
-          <p className="mt-2 text-center text-[11px] font-medium text-[#9CA3AF]">
+          <p className="mt-2 text-center text-[11px] font-medium text-text-muted">
             Percakapan ini bersifat sementara dan tidak tersimpan di server.
           </p>
         </div>

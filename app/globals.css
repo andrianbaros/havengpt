@@ -2,33 +2,69 @@
 @import "tailwindcss";
 
 :root {
-  /* Background layers - Soft Pink Palette */
-  --bg-base:        #FFF7FB;
-  --bg-surface:     #FFF0F7;
-  --bg-card:        #FFFFFF;
-  --bg-hover:       #FCE7F3;
+  /* ☀️ Light Mode Tokens - Dominant Royal Blue */
+  --bg-base:          #F5F8FF;
+  --bg-surface:       #FFFFFF;
+  --bg-sidebar:       #EEF4FF;
+  --bg-card:          #FFFFFF;
+  --bg-hover:         #E0EBFF;
+  
+  --primary:          #2563EB;
+  --primary-hover:    #1D4ED8;
+  --accent:           #60A5FA;
+  
+  --text-primary:     #0F172A;
+  --text-secondary:   #64748B;
+  --text-muted:       #94A3B8;
+  
+  --border:           rgba(15, 23, 42, 0.08);
+  --border-subtle:    rgba(15, 23, 42, 0.04);
+  --border-medium:    rgba(15, 23, 42, 0.12);
+  
+  --shadow-sm: 0 1px 3px rgba(37, 99, 235, 0.03), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-md: 0 4px 14px -2px rgba(37, 99, 235, 0.06), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  --shadow-lg: 0 12px 32px -4px rgba(37, 99, 235, 0.1), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+  --shadow-glow: 0 0 0 4px rgba(37, 99, 235, 0.12);
 
-  /* Primary & Accent Pink */
-  --primary:        #EC4899;
-  --primary-hover:  #DB2777;
-  --accent:         #F472B6;
-  --accent-light:   #FDF2F8;
+  --scrollbar-thumb:  rgba(37, 99, 235, 0.15);
+  --scrollbar-hover:  rgba(37, 99, 235, 0.25);
+  
+  --code-bg:          #F0F4FF;
+  --code-text:        #1E40AF;
+  --code-border:      rgba(37, 99, 235, 0.15);
+}
 
-  /* Text - High Legibility Dark Slate */
-  --text-primary:   #1F2937;
-  --text-secondary: #6B7280;
-  --text-muted:     #9CA3AF;
+.dark {
+  /* 🌙 Dark Mode Tokens - Dominant Royal Blue */
+  --bg-base:          #040816;
+  --bg-surface:       #091326;
+  --bg-sidebar:       #08101F;
+  --bg-card:          #111C35;
+  --bg-hover:         #1E2A4A;
+  
+  --primary:          #2563EB;
+  --primary-hover:    #1D4ED8;
+  --accent:           #3B82F6;
+  
+  --text-primary:     #F8FAFC;
+  --text-secondary:   #A7B3C8;
+  --text-muted:       #64748B;
+  
+  --border:           rgba(255, 255, 255, 0.06);
+  --border-subtle:    rgba(255, 255, 255, 0.03);
+  --border-medium:    rgba(255, 255, 255, 0.12);
+  
+  --shadow-sm: 0 2px 8px -2px rgba(0, 0, 0, 0.5), 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 24px -4px rgba(0, 0, 0, 0.6), 0 2px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 40px -8px rgba(0, 0, 0, 0.8), 0 4px 12px -2px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 0 4px rgba(37, 99, 235, 0.25);
 
-  /* Border */
-  --border:         #F3D4E6;
-  --border-subtle:  #FCE7F3;
-  --border-medium:  #E8B4D1;
+  --scrollbar-thumb:  rgba(255, 255, 255, 0.08);
+  --scrollbar-hover:  rgba(255, 255, 255, 0.15);
 
-  /* Soft Ambient Pink Shadows */
-  --shadow-sm: 0 2px 8px -2px rgba(236, 72, 153, 0.05), 0 1px 3px 0 rgba(0, 0, 0, 0.02);
-  --shadow-md: 0 8px 24px -4px rgba(236, 72, 153, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.03);
-  --shadow-lg: 0 16px 40px -8px rgba(236, 72, 153, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.04);
-  --shadow-glow: 0 0 0 4px rgba(236, 72, 153, 0.12);
+  --code-bg:          #0B1220;
+  --code-text:        #93C5FD;
+  --code-border:      rgba(255, 255, 255, 0.08);
 }
 
 @theme inline {
@@ -39,6 +75,10 @@
   --color-accent: var(--accent);
   --color-secondary-text: var(--text-secondary);
   --color-border: var(--border);
+  
+  --color-bg-sidebar: var(--bg-sidebar);
+  --color-bg-card: var(--bg-card);
+  --color-bg-hover: var(--bg-hover);
 }
 
 *,
@@ -61,6 +101,7 @@ body {
   overflow: hidden;
   line-height: 1.65;
   letter-spacing: -0.01em;
+  transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease;
 }
 
 /* ── Scrollbar ─────────────────────────────────── */
@@ -74,12 +115,13 @@ body {
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background: rgba(236, 72, 153, 0.15);
+  background: var(--scrollbar-thumb);
   border-radius: 9999px;
+  transition: background-color 150ms;
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background: rgba(236, 72, 153, 0.3);
+  background: var(--scrollbar-hover);
 }
 
 .scrollbar-none::-webkit-scrollbar {
@@ -111,20 +153,20 @@ textarea {
 .prose-kasep h1 { font-size: 1.125rem; font-weight: 700; color: var(--text-primary); margin: 1.25rem 0 0.5rem; line-height: 1.4; }
 .prose-kasep h2 { font-size: 1rem;     font-weight: 600; color: var(--text-primary); margin: 1.1rem  0 0.4rem; line-height: 1.4; }
 .prose-kasep h3 { font-size: 0.9rem;   font-weight: 600; color: var(--text-primary); margin: 0.9rem  0 0.35rem; }
-.prose-kasep p  { margin-bottom: 0.75rem; line-height: 1.7; color: #374151; }
+.prose-kasep p  { margin-bottom: 0.75rem; line-height: 1.7; color: var(--text-primary); opacity: 0.9; }
 .prose-kasep p:last-child { margin-bottom: 0; }
 .prose-kasep ul { list-style: none; padding: 0; margin: 0 0 0.75rem; }
 .prose-kasep ol { list-style: none; padding: 0; margin: 0 0 0.75rem; counter-reset: list-counter; }
-.prose-kasep ul li { position: relative; padding-left: 1.25rem; margin-bottom: 0.35rem; color: #374151; }
+.prose-kasep ul li { position: relative; padding-left: 1.25rem; margin-bottom: 0.35rem; color: var(--text-primary); opacity: 0.9; }
 .prose-kasep ul li::before { content: ''; position: absolute; left: 0; top: 0.55em; width: 5px; height: 5px; background: var(--primary); border-radius: 50%; }
-.prose-kasep ol li { position: relative; padding-left: 1.5rem; margin-bottom: 0.35rem; color: #374151; counter-increment: list-counter; }
+.prose-kasep ol li { position: relative; padding-left: 1.5rem; margin-bottom: 0.35rem; color: var(--text-primary); opacity: 0.9; counter-increment: list-counter; }
 .prose-kasep ol li::before { content: counter(list-counter) '.'; position: absolute; left: 0; color: var(--primary); font-size: 0.75rem; font-weight: 600; top: 0.05em; }
 .prose-kasep strong { color: var(--text-primary); font-weight: 600; }
-.prose-kasep em { font-style: italic; color: #4B5563; }
-.prose-kasep a { color: var(--primary); text-decoration: none; border-bottom: 1px solid rgba(236,72,153,0.3); transition: border-color 150ms; }
+.prose-kasep em { font-style: italic; color: var(--text-secondary); }
+.prose-kasep a { color: var(--primary); text-decoration: none; border-bottom: 1px solid var(--accent); transition: border-color 150ms; }
 .prose-kasep a:hover { border-bottom-color: var(--primary); }
-.prose-kasep code { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.8rem; background: #FFF0F7; color: #9D174D; padding: 0.15rem 0.4rem; border-radius: 6px; border: 1px solid #FBCFE8; }
-.prose-kasep blockquote { border-left: 3px solid var(--accent); padding-left: 1rem; margin: 1rem 0; color: #6B7280; font-style: italic; background: #FFF7FB; padding-top: 0.5rem; padding-bottom: 0.5rem; border-radius: 0 8px 8px 0; }
+.prose-kasep code { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.8rem; background: var(--code-bg); color: var(--code-text); padding: 0.15rem 0.4rem; border-radius: 6px; border: 1px solid var(--code-border); transition: background-color 200ms, border-color 200ms; }
+.prose-kasep blockquote { border-left: 3px solid var(--primary); padding-left: 1rem; margin: 1rem 0; color: var(--text-secondary); font-style: italic; background: var(--bg-sidebar); padding-top: 0.5rem; padding-bottom: 0.5rem; border-radius: 0 8px 8px 0; transition: background-color 200ms; }
 .prose-kasep hr { border: none; border-top: 1px solid var(--border); margin: 1.25rem 0; }
 
 /* ── Transitions ───────────────────────────────── */
@@ -135,7 +177,7 @@ textarea {
 input[type='range'] {
   -webkit-appearance: none;
   height: 4px;
-  background: #FCE7F3;
+  background: var(--border);
   border-radius: 9999px;
   cursor: pointer;
 }
@@ -147,13 +189,13 @@ input[type='range']::-webkit-slider-thumb {
   border-radius: 50%;
   background: var(--primary);
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(236,72,153,0.3);
+  box-shadow: 0 2px 6px rgba(37,99,235,0.3);
   transition: transform 150ms, box-shadow 150ms;
 }
 
 input[type='range']::-webkit-slider-thumb:hover {
   transform: scale(1.15);
-  box-shadow: 0 0 0 4px rgba(236,72,153,0.2);
+  box-shadow: 0 0 0 4px rgba(37,99,235,0.2);
 }
 
 /* ── Select element ────────────────────────────── */
