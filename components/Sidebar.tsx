@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
-import { Plus, MessageSquare, Trash2, Settings, X, Heart, Sparkles } from 'lucide-react';
+import React, { useState } from 'react';
+import { Plus, MessageSquare, Trash2, Settings, X, Heart, Sparkles, HardDrive, AlertTriangle } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Chat } from '../types';
 
@@ -28,6 +28,8 @@ export default function Sidebar({
   onDeleteAllChats,
   onOpenSettings,
 }: SidebarProps) {
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+
   return (
     <>
       {/* Mobile Backdrop Blur */}
@@ -162,11 +164,19 @@ export default function Sidebar({
           )}
         </div>
 
+        {/* Local Storage Privacy Notification Card */}
+        <div className="mx-3 my-2 rounded-xl bg-white/40 border border-[#F3D4E6]/40 p-3.5 flex items-start gap-2.5">
+          <HardDrive className="h-4 w-4 text-[#EC4899] opacity-60 mt-0.5 shrink-0" strokeWidth={2} />
+          <p className="text-[10px] leading-relaxed text-[#6B7280]">
+            Riwayat chat hanya tersimpan di perangkat ini dan tidak bersifat permanen.
+          </p>
+        </div>
+
         {/* Footer Actions */}
         <div className="shrink-0 border-t border-[#F3D4E6]/60 px-2.5 py-3 space-y-1 bg-[#FFF0F7]">
           {chats.length > 0 && (
             <button
-              onClick={onDeleteAllChats}
+              onClick={() => setShowConfirmDelete(true)}
               className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-[12px] font-medium text-[#6B7280] hover:text-[#EF4444] hover:bg-[#FEE2E2]/60 transition-all duration-150 focus-visible:outline-none"
             >
               <Trash2 className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} />
@@ -186,6 +196,52 @@ export default function Sidebar({
           </button>
         </div>
       </aside>
+
+      {/* Confirmation Dialog Overlay Modal */}
+      <AnimatePresence>
+        {showConfirmDelete && (
+          <div
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-pink-950/20 backdrop-blur-sm"
+            onClick={() => setShowConfirmDelete(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.15 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-[360px] overflow-hidden rounded-2xl border border-[#F3D4E6] bg-white p-5 shadow-[0_16px_40px_rgba(236,72,153,0.15)] text-center"
+            >
+              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#FEE2E2] text-[#EF4444]">
+                <AlertTriangle className="h-6 w-6" strokeWidth={2} />
+              </div>
+              <h3 className="text-[16px] font-bold text-[#1F2937] mb-1.5">
+                Hapus seluruh riwayat percakapan?
+              </h3>
+              <p className="text-[12.5px] leading-relaxed text-[#6B7280] mb-6">
+                Riwayat chat hanya tersimpan di browser ini. Tindakan ini tidak dapat dibatalkan.
+              </p>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setShowConfirmDelete(false)}
+                  className="flex-1 rounded-xl border border-[#F3D4E6] py-2.5 text-[13px] font-semibold text-[#6B7280] hover:bg-[#FFF0F7] transition-all duration-150 focus-visible:outline-none"
+                >
+                  Batal
+                </button>
+                <button
+                  onClick={() => {
+                    onDeleteAllChats();
+                    setShowConfirmDelete(false);
+                  }}
+                  className="flex-1 rounded-xl bg-[#EF4444] py-2.5 text-[13px] font-semibold text-white hover:bg-[#DC2626] shadow-[0_2px_8px_rgba(239,68,68,0.25)] transition-all duration-150 focus-visible:outline-none"
+                >
+                  Hapus Riwayat
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

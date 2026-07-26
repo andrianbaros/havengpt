@@ -6,6 +6,7 @@ import ChatArea from '../components/ChatArea';
 import SettingsModal from '../components/SettingsModal';
 import Toast, { ToastMessage } from '../components/Toast';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { chatStorage } from '../lib/chat-storage';
 import { Chat, Message, Settings } from '../types';
 
 const DEFAULT_SETTINGS: Settings = {
@@ -15,9 +16,10 @@ const DEFAULT_SETTINGS: Settings = {
 };
 
 export default function Home() {
-  const [chats, setChats] = useLocalStorage<Chat[]>('kasepgpt_chats', []);
-  const [activeChatId, setActiveChatId] = useLocalStorage<string | null>('kasepgpt_active_chat_id', null);
+  const [chats, setChats] = useState<Chat[]>([]);
+  const [activeChatId, setActiveChatId] = useState<string | null>(null);
   const [settings, setSettings] = useLocalStorage<Settings>('kasepgpt_settings', DEFAULT_SETTINGS);
+  const [isLoaded, setIsLoaded] = useState(false);
   
   const [isGenerating, setIsGenerating] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(() => {
@@ -43,20 +45,47 @@ export default function Home() {
     });
   }, []);
 
-  // Initialize first chat if none exists
+  // Initialize from LocalStorage
   useEffect(() => {
-    if (chats.length === 0) {
+    const savedChats = chatStorage.loadChats();
+    const savedActiveId = chatStorage.loadActiveChatId();
+
+    if (savedChats.length > 0) {
+      setChats(savedChats);
+      if (savedActiveId && savedChats.some(c => c.id === savedActiveId)) {
+        setActiveChatId(savedActiveId);
+      } else {
+        setActiveChatId(savedChats[0].id);
+      }
+    } else {
       const newChatId = generateId();
       const initialChat: Chat = {
         id: newChatId,
-        title: 'New Chat',
+        title: 'Percakapan Baru',
         messages: [],
         createdAt: Date.now(),
       };
       setChats([initialChat]);
       setActiveChatId(newChatId);
+      chatStorage.saveChats([initialChat]);
+      chatStorage.saveActiveChatId(newChatId);
     }
-  }, [chats.length, setChats, setActiveChatId]);
+    setIsLoaded(true);
+  }, []);
+
+  // Save chats on state change
+  useEffect(() => {
+    if (isLoaded) {
+      chatStorage.saveChats(chats);
+    }
+  }, [chats, isLoaded]);
+
+  // Save active id on change
+  useEffect(() => {
+    if (isLoaded) {
+      chatStorage.saveActiveChatId(activeChatId);
+    }
+  }, [activeChatId, isLoaded]);
 
   const handleNewChat = useCallback(() => {
     if (isGenerating) {
@@ -66,7 +95,7 @@ export default function Home() {
     const newChatId = generateId();
     const newChat: Chat = {
       id: newChatId,
-      title: 'New Chat',
+      title: 'Percakapan Baru',
       messages: [],
       createdAt: Date.now(),
     };
@@ -90,17 +119,34 @@ export default function Home() {
       if (remaining.length > 0) {
         setActiveChatId(remaining[0].id);
       } else {
-        setActiveChatId(null);
+        // Pick a brand new clean chat if none left
+        const newChatId = generateId();
+        const initialChat: Chat = {
+          id: newChatId,
+          title: 'Percakapan Baru',
+          messages: [],
+          createdAt: Date.now(),
+        };
+        setChats([initialChat]);
+        setActiveChatId(newChatId);
       }
     }
     showToast('success', 'Chat dihapus', 'Percakapan berhasil dihapus dari riwayat.');
   }, [activeChatId, chats, setChats, setActiveChatId, showToast]);
 
   const handleDeleteAllChats = useCallback(() => {
-    setChats([]);
-    setActiveChatId(null);
+    chatStorage.clearChats();
+    const newChatId = generateId();
+    const initialChat: Chat = {
+      id: newChatId,
+      title: 'Percakapan Baru',
+      messages: [],
+      createdAt: Date.now(),
+    };
+    setChats([initialChat]);
+    setActiveChatId(newChatId);
     showToast('success', 'Semua riwayat dihapus', 'Semua riwayat percakapan telah dibersihkan.');
-  }, [setChats, setActiveChatId, showToast]);
+  }, [showToast]);
 
   const handleStopGeneration = useCallback(() => {
     if (abortControllerRef.current) {
