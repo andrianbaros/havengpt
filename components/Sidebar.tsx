@@ -45,12 +45,12 @@ export default function Sidebar({
         }`}
       >
         {/* Logo area */}
-        <div className="flex h-16 shrink-0 items-center justify-between px-4 border-b border-white/[0.06]">
+        <div className="flex h-20 shrink-0 items-center justify-between px-4 border-b border-white/[0.06]">
           <Image
             src="/assets/logo.png"
             alt="KasepGPT"
-            width={140}
-            height={44}
+            width={190}
+            height={58}
             className="object-contain"
             priority
           />
