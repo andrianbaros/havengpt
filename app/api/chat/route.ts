@@ -4,7 +4,7 @@ import { getDynamicSystemPrompt } from '../../../lib/knowledgeLoader';
 export const runtime    = 'nodejs';
 export const maxDuration = 60; // seconds (Vercel Hobby limit)
 
-const BYNARA_MODELS = ['agnes-2.5-flash', 'grok-4.5'];
+const BYNARA_MODELS = ['agnes-2.0-flash', 'mistral-large', 'mistral-medium-3-5', 'agnes-2.5-flash', 'grok-4.5'];
 
 type ChatMessage = { role: string; content: string };
 

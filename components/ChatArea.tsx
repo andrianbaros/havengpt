@@ -22,12 +22,16 @@ interface ChatAreaProps {
 }
 
 const MODEL_LABELS: Record<string, string> = {
+  'agnes-2.0-flash': 'Agnes 2.0 Flash',
+  'mistral-large': 'Mistral Large',
+  'mistral-medium-3-5': 'Mistral Medium 3.5',
   'agnes-2.5-flash': 'Agnes 2.5 Flash',
   'grok-4.5': 'Grok 4.5',
   'gpt-oss-120b': 'GPT OSS 120B',
 };
 
-const BYNARA_MODELS = ['agnes-2.5-flash', 'grok-4.5'];
+const BYNARA_FREE_MODELS = ['agnes-2.0-flash', 'mistral-large', 'mistral-medium-3-5'];
+const BYNARA_PREMIUM_MODELS = ['agnes-2.5-flash', 'grok-4.5'];
 const CEREBRAS_MODELS = ['gpt-oss-120b'];
 
 const SUGGESTIONS = [
@@ -344,10 +348,11 @@ export default function ChatArea({
 
               {modelDropdownOpen && (
                 <div className="absolute left-0 bottom-full mb-2 z-50 w-52 animate-fade-in-up rounded-2xl border border-border bg-bg-card py-2 shadow-lg origin-bottom-left">
+                  {/* Bynara Free Models */}
                   <div className="px-3 pb-1 pt-1">
-                    <span className="text-[9.5px] font-bold uppercase tracking-widest text-primary">Bynara (Premium)</span>
+                    <span className="text-[9.5px] font-bold uppercase tracking-widest text-[#9CA3AF]">Bynara (Free)</span>
                   </div>
-                  {BYNARA_MODELS.map(m => (
+                  {BYNARA_FREE_MODELS.map(m => (
                     <button
                       key={m}
                       onClick={() => { onChangeModel(m); setModelDropdownOpen(false); }}
@@ -356,6 +361,28 @@ export default function ChatArea({
                       }`}
                     >
                       {MODEL_LABELS[m] || m}
+                      {modelName === m && <div className="h-1.5 w-1.5 rounded-full bg-primary" />}
+                    </button>
+                  ))}
+
+                  <div className="mx-3 my-1 border-t border-border/60" />
+
+                  {/* Bynara Premium Models */}
+                  <div className="px-3 pb-1 pt-1">
+                    <span className="text-[9.5px] font-bold uppercase tracking-widest text-primary animate-pulse">Bynara (Premium)</span>
+                  </div>
+                  {BYNARA_PREMIUM_MODELS.map(m => (
+                    <button
+                      key={m}
+                      onClick={() => { onChangeModel(m); setModelDropdownOpen(false); }}
+                      className={`flex w-full items-center justify-between px-3 py-2 text-[12.5px] font-medium transition-colors duration-150 hover:bg-bg-hover focus-visible:outline-none ${
+                        modelName === m ? 'text-primary font-bold' : 'text-foreground'
+                      }`}
+                    >
+                      <span className="flex items-center gap-1.5">
+                        <span>{MODEL_LABELS[m] || m}</span>
+                        <span className="rounded bg-primary/10 px-1 py-0.5 text-[8.5px] font-bold text-primary">PRO</span>
+                      </span>
                       {modelName === m && <div className="h-1.5 w-1.5 rounded-full bg-primary" />}
                     </button>
                   ))}
