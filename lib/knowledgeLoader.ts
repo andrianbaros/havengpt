@@ -80,7 +80,6 @@ function getMatchedExamples(matchedFiles: string[]): string {
 
     // Split examples by section header (##)
     const sections = content.split('\n## ');
-    const header = sections[0];
     const matchedSections: string[] = [];
 
     // Map files to matches
