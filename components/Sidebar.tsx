@@ -126,12 +126,12 @@ export default function Sidebar({
                       <div className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-[#EC4899]" />
                     )}
 
-                    <button
+                     <button
                       onClick={() => {
                         onSelectChat(chat.id);
                         onClose();
                       }}
-                      className="flex flex-1 items-center gap-2.5 pl-3.5 pr-8 py-2.5 text-left focus-visible:outline-none"
+                      className="flex flex-1 items-center gap-2.5 pl-3.5 pr-8 py-2.5 text-left focus-visible:outline-none min-w-0"
                     >
                       <MessageSquare
                         className={`h-3.5 w-3.5 shrink-0 transition-colors duration-150 ${
@@ -152,7 +152,7 @@ export default function Sidebar({
 
                     <button
                       onClick={() => onDeleteChat(chat.id)}
-                      className="absolute right-2 flex h-6 w-6 items-center justify-center rounded-lg opacity-0 group-hover:opacity-100 text-[#9CA3AF] hover:text-[#EF4444] hover:bg-[#FEE2E2] transition-all duration-150 focus-visible:outline-none focus-visible:opacity-100"
+                      className="absolute right-2 flex h-6 w-6 items-center justify-center rounded-lg text-[#9CA3AF] hover:text-[#EF4444] hover:bg-[#FEE2E2] opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-150 focus-visible:outline-none focus-visible:opacity-100"
                       aria-label="Hapus percakapan"
                     >
                       <Trash2 className="h-3 w-3" strokeWidth={1.75} />
