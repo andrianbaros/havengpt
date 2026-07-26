@@ -148,7 +148,7 @@ export default function ChatArea({
 
           <div className="flex items-center gap-2">
             <Image
-              src="/logo.jpg"
+              src="/assets/logo.png"
               alt="KasepGPT"
               width={26}
               height={26}

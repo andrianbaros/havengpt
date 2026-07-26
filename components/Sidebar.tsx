@@ -48,7 +48,7 @@ export default function Sidebar({
         <div className="flex h-14 shrink-0 items-center justify-between px-5 border-b border-white/[0.06]">
           <div className="flex items-center gap-2.5">
             <Image
-              src="/logo.jpg"
+              src="/assets/logo.png"
               alt="KasepGPT"
               width={28}
               height={28}
