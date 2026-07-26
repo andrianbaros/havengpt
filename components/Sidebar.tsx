@@ -116,7 +116,7 @@ export default function Sidebar({
                 return (
                   <div
                     key={chat.id}
-                    className={`group relative flex items-center rounded-xl transition-all duration-150 ${
+                    className={`group relative flex items-center rounded-xl transition-all duration-150 min-w-0 ${
                       isActive
                         ? 'bg-white shadow-[0_2px_8px_rgba(236,72,153,0.08)] border border-[#F3D4E6]'
                         : 'hover:bg-white/60 hover:border hover:border-[#F3D4E6]/50'
@@ -152,7 +152,7 @@ export default function Sidebar({
 
                     <button
                       onClick={() => onDeleteChat(chat.id)}
-                      className="absolute right-2 flex h-6 w-6 items-center justify-center rounded-lg text-[#9CA3AF] hover:text-[#EF4444] hover:bg-[#FEE2E2] opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-150 focus-visible:outline-none focus-visible:opacity-100"
+                      className="absolute right-2 flex h-6 w-6 items-center justify-center rounded-lg text-[#9CA3AF] hover:text-[#EF4444] hover:bg-[#FEE2E2] opacity-100 transition-all duration-150 focus-visible:outline-none"
                       aria-label="Hapus percakapan"
                     >
                       <Trash2 className="h-3 w-3" strokeWidth={1.75} />
