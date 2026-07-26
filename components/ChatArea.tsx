@@ -350,7 +350,7 @@ export default function ChatArea({
                 <div className="absolute left-0 bottom-full mb-2 z-50 w-52 animate-fade-in-up rounded-2xl border border-border bg-bg-card py-2 shadow-lg origin-bottom-left">
                   {/* Bynara Free Models */}
                   <div className="px-3 pb-1 pt-1">
-                    <span className="text-[9.5px] font-bold uppercase tracking-widest text-[#9CA3AF]">Bynara (Free)</span>
+                    <span className="text-[9.5px] font-bold uppercase tracking-widest text-text-muted">Standar</span>
                   </div>
                   {BYNARA_FREE_MODELS.map(m => (
                     <button
@@ -369,7 +369,7 @@ export default function ChatArea({
 
                   {/* Bynara Premium Models */}
                   <div className="px-3 pb-1 pt-1">
-                    <span className="text-[9.5px] font-bold uppercase tracking-widest text-primary animate-pulse">Bynara (Premium)</span>
+                    <span className="text-[9.5px] font-bold uppercase tracking-widest text-primary animate-pulse">Premium</span>
                   </div>
                   {BYNARA_PREMIUM_MODELS.map(m => (
                     <button
@@ -388,7 +388,7 @@ export default function ChatArea({
                   ))}
                   <div className="mx-3 my-1 border-t border-border" />
                   <div className="px-3 pb-1 pt-1">
-                    <span className="text-[9.5px] font-bold uppercase tracking-widest text-text-muted">Cerebras (Cadangan)</span>
+                    <span className="text-[9.5px] font-bold uppercase tracking-widest text-text-muted">Cadangan</span>
                   </div>
                   {CEREBRAS_MODELS.map(m => (
                     <button
