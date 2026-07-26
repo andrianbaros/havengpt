@@ -159,56 +159,7 @@ export default function ChatArea({
 
           <div className="hidden sm:block h-3.5 w-px bg-white/[0.1]" />
 
-          {/* Model selector */}
-          <div className="relative hidden sm:block" ref={dropdownRef}>
-            <button
-              onClick={() => setModelDropdownOpen(v => !v)}
-              className="flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-[12px] text-[#64748B] hover:text-[#94A3B8] hover:bg-white/[0.05] transition-all duration-200 focus-visible:outline-none"
-            >
-              <Cpu className="h-3 w-3 shrink-0" strokeWidth={1.5} />
-              <span>{displayLabel}</span>
-              <ChevronDown
-                className={`h-2.5 w-2.5 transition-transform duration-200 ${modelDropdownOpen ? 'rotate-180' : ''}`}
-                strokeWidth={2}
-              />
-            </button>
 
-            {modelDropdownOpen && (
-              <div className="absolute left-0 top-full mt-1.5 z-50 w-52 animate-fade-in-up rounded-xl border border-white/[0.09] bg-[#0B1220] py-1.5 shadow-[0_8px_32px_rgba(0,0,0,0.5)]">
-                <div className="px-3 pb-1 pt-2">
-                  <span className="text-[9.5px] font-semibold uppercase tracking-widest text-[#64748B]">Bynara</span>
-                </div>
-                {BYNARA_MODELS.map(m => (
-                  <button
-                    key={m}
-                    onClick={() => { onChangeModel(m); setModelDropdownOpen(false); }}
-                    className={`flex w-full items-center justify-between px-3 py-2 text-[12.5px] transition-colors duration-150 hover:bg-white/[0.05] focus-visible:outline-none ${
-                      modelName === m ? 'text-[#3B82F6] font-medium' : 'text-[#94A3B8] hover:text-white'
-                    }`}
-                  >
-                    {MODEL_LABELS[m] || m}
-                    {modelName === m && <div className="h-1.5 w-1.5 rounded-full bg-[#3B82F6]" />}
-                  </button>
-                ))}
-                <div className="mx-3 my-1 border-t border-white/[0.06]" />
-                <div className="px-3 pb-1 pt-1">
-                  <span className="text-[9.5px] font-semibold uppercase tracking-widest text-[#64748B]">Cerebras</span>
-                </div>
-                {CEREBRAS_MODELS.map(m => (
-                  <button
-                    key={m}
-                    onClick={() => { onChangeModel(m); setModelDropdownOpen(false); }}
-                    className={`flex w-full items-center justify-between px-3 py-2 text-[12.5px] transition-colors duration-150 hover:bg-white/[0.05] focus-visible:outline-none ${
-                      modelName === m ? 'text-[#3B82F6] font-medium' : 'text-[#94A3B8] hover:text-white'
-                    }`}
-                  >
-                    {MODEL_LABELS[m] || m}
-                    {modelName === m && <div className="h-1.5 w-1.5 rounded-full bg-[#3B82F6]" />}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
         </div>
 
         {/* Right: stop button */}
@@ -366,7 +317,62 @@ export default function ChatArea({
       {/* ── Input panel ──────────────────────────────── */}
       <div className="shrink-0 border-t border-white/[0.06] bg-[#05070B] px-4 pb-6 pt-4 md:px-8">
         <div className="mx-auto max-w-2xl">
-          <div className="flex items-end gap-3 rounded-2xl border border-white/[0.09] bg-[#0B1220] px-5 py-3.5 transition-all duration-250 focus-within:border-[#2563EB]/40 focus-within:shadow-[0_0_0_3px_rgba(37,99,235,0.08)]">
+          <div className="flex items-end gap-3 rounded-2xl border border-white/[0.09] bg-[#0B1220] px-4 py-3.5 transition-all duration-250 focus-within:border-[#2563EB]/40 focus-within:shadow-[0_0_0_3px_rgba(37,99,235,0.08)]">
+            
+            {/* Model selector (Left of textarea) */}
+            <div className="relative mb-0.5 shrink-0" ref={dropdownRef}>
+              <button
+                onClick={() => setModelDropdownOpen(v => !v)}
+                className="flex h-7 items-center gap-1.5 rounded-lg px-2.5 text-[11px] font-medium text-[#64748B] hover:text-[#94A3B8] hover:bg-white/[0.06] transition-all duration-200 focus-visible:outline-none"
+                aria-label="Pilih model AI"
+              >
+                <Cpu className="h-3 w-3 shrink-0" strokeWidth={1.5} />
+                <span className="max-w-[70px] truncate sm:max-w-none">{displayLabel}</span>
+                <ChevronDown
+                  className={`h-2.5 w-2.5 opacity-70 transition-transform duration-200 ${modelDropdownOpen ? 'rotate-180' : ''}`}
+                  strokeWidth={2}
+                />
+              </button>
+
+              {modelDropdownOpen && (
+                <div className="absolute left-0 bottom-full mb-2 z-50 w-52 animate-fade-in-up rounded-xl border border-white/[0.09] bg-[#0B1220] py-1.5 shadow-[0_8px_32px_rgba(0,0,0,0.5)] origin-bottom-left">
+                  <div className="px-3 pb-1 pt-2">
+                    <span className="text-[9.5px] font-semibold uppercase tracking-widest text-[#64748B]">Bynara</span>
+                  </div>
+                  {BYNARA_MODELS.map(m => (
+                    <button
+                      key={m}
+                      onClick={() => { onChangeModel(m); setModelDropdownOpen(false); }}
+                      className={`flex w-full items-center justify-between px-3 py-2 text-[12.5px] transition-colors duration-150 hover:bg-white/[0.05] focus-visible:outline-none ${
+                        modelName === m ? 'text-[#3B82F6] font-medium' : 'text-[#94A3B8] hover:text-white'
+                      }`}
+                    >
+                      {MODEL_LABELS[m] || m}
+                      {modelName === m && <div className="h-1.5 w-1.5 rounded-full bg-[#3B82F6]" />}
+                    </button>
+                  ))}
+                  <div className="mx-3 my-1 border-t border-white/[0.06]" />
+                  <div className="px-3 pb-1 pt-1">
+                    <span className="text-[9.5px] font-semibold uppercase tracking-widest text-[#64748B]">Cerebras</span>
+                  </div>
+                  {CEREBRAS_MODELS.map(m => (
+                    <button
+                      key={m}
+                      onClick={() => { onChangeModel(m); setModelDropdownOpen(false); }}
+                      className={`flex w-full items-center justify-between px-3 py-2 text-[12.5px] transition-colors duration-150 hover:bg-white/[0.05] focus-visible:outline-none ${
+                        modelName === m ? 'text-[#3B82F6] font-medium' : 'text-[#94A3B8] hover:text-white'
+                      }`}
+                    >
+                      {MODEL_LABELS[m] || m}
+                      {modelName === m && <div className="h-1.5 w-1.5 rounded-full bg-[#3B82F6]" />}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="mb-0.5 h-6 w-px bg-white/[0.06] shrink-0" />
+
             <textarea
               ref={textareaRef}
               rows={1}
