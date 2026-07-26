@@ -4,11 +4,11 @@ import React, { useRef, useEffect, useState } from 'react';
 import {
   Send, Menu, ArrowDown, Copy, Check,
   RotateCcw, StopCircle, AlertCircle, ChevronDown, Cpu,
-  Heart, User, Sparkles, MessageCircleHeart
+  Heart, User, MessageCircleHeart
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { Chat, Message } from '../types';
+import { Chat } from '../types';
 
 interface ChatAreaProps {
   chat: Chat | null;
