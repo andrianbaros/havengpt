@@ -56,7 +56,8 @@ body {
   font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   overflow: hidden;
-  line-height: 1.6;
+  line-height: 1.65;
+  letter-spacing: -0.01em;
 }
 
 /* ── Scrollbar ─────────────────────────────────── */
@@ -120,6 +121,7 @@ textarea {
 .prose-kasep a { color: #60a5fa; text-decoration: none; border-bottom: 1px solid rgba(96,165,250,0.3); transition: border-color 150ms; }
 .prose-kasep a:hover { border-bottom-color: rgba(96,165,250,0.7); }
 .prose-kasep code { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: 0.78rem; }
+.prose-kasep blockquote { border-left: 2px solid rgba(255, 255, 255, 0.1); padding-left: 1rem; margin: 1rem 0; color: rgba(148, 163, 184, 0.7); font-style: italic; }
 .prose-kasep hr { border: none; border-top: 1px solid var(--border-medium); margin: 1.25rem 0; }
 
 /* ── Transitions ───────────────────────────────── */
