@@ -49,8 +49,8 @@ export default function Sidebar({
           <Image
             src="/assets/logo.png"
             alt="KasepGPT"
-            width={190}
-            height={58}
+            width={220}
+            height={68}
             className="object-contain"
             priority
           />
