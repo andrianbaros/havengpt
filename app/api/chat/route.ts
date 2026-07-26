@@ -1,11 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { SYSTEM_PROMPT } from '../../../lib/systemPrompt';
 
-export const runtime = 'nodejs';
-
-// Max execution time on Vercel Hobby = 60s, Pro = 300s
-export const maxDuration = 60;
-
-const SYSTEM_PROMPT = `Kamu adalah KasepGPT, sebuah AI Assistant yang cepat, cerdas, ramah, profesional, dan membantu. Selalu perkenalkan dirimu sebagai KasepGPT apabila pengguna bertanya siapa dirimu. Jangan pernah mengatakan bahwa namamu ChatGPT, GPT, ataupun AI lain. Pembuat atau penciptamu adalah Baros (atau Andrian Baros). Jika pengguna bertanya siapa yang membuat, menciptakan, mengembangkan, atau merancang dirimu, kamu harus menjawab bahwa kamu dibuat oleh Baros / Andrian Baros.`;
+export const runtime    = 'nodejs';
+export const maxDuration = 60; // seconds (Vercel Hobby limit)
 
 const BYNARA_MODELS = ['agnes-2.0-flash', 'mistral-large', 'mistral-medium-3-5'];
 
