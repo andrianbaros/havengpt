@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Sidebar from '../components/Sidebar';
 import ChatArea from '../components/ChatArea';
 import SettingsModal from '../components/SettingsModal';
+import PremiumModal from '../components/PremiumModal';
 import Toast, { ToastMessage } from '../components/Toast';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { chatStorage } from '../lib/chat-storage';
@@ -29,6 +30,7 @@ export default function Home() {
     return true;
   });
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isPremiumOpen, setIsPremiumOpen] = useState(false);
   const [toast, setToast] = useState<ToastMessage | null>(null);
 
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -80,6 +82,18 @@ export default function Home() {
       chatStorage.saveChats(chats);
     }
   }, [chats, isLoaded]);
+
+  // Enforce premium access lock on load/model change
+  useEffect(() => {
+    if (isLoaded) {
+      const isPremiumModel = ['agnes-2.5-flash', 'grok-4.5'].includes(settings.model);
+      const unlocked = window.localStorage.getItem('haven_premium_unlocked') === 'true';
+      if (isPremiumModel && !unlocked) {
+        setSettings((prev) => ({ ...prev, model: 'gpt-oss-120b' }));
+        setIsPremiumOpen(true);
+      }
+    }
+  }, [settings.model, isLoaded, setSettings]);
 
   // Save active id on change
   useEffect(() => {
@@ -348,10 +362,30 @@ export default function Home() {
     await handleSendMessage(lastUserMessage.content);
   };
 
+  const handleSaveSettings = useCallback((newSettings: Settings) => {
+    const isPremiumModel = ['agnes-2.5-flash', 'grok-4.5'].includes(newSettings.model);
+    const unlocked = typeof window !== 'undefined' && window.localStorage.getItem('haven_premium_unlocked') === 'true';
+    if (isPremiumModel && !unlocked) {
+      setIsPremiumOpen(true);
+      return;
+    }
+    setSettings(newSettings);
+  }, [setSettings]);
+
+  const handleChangeModel = useCallback((model: string) => {
+    const isPremiumModel = ['agnes-2.5-flash', 'grok-4.5'].includes(model);
+    const unlocked = typeof window !== 'undefined' && window.localStorage.getItem('haven_premium_unlocked') === 'true';
+    if (isPremiumModel && !unlocked) {
+      setIsPremiumOpen(true);
+      return;
+    }
+    setSettings((prev) => ({ ...prev, model }));
+  }, [setSettings]);
+
   const activeChat = getActiveChat();
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#FFF7FB]">
+    <div className="flex h-screen w-screen overflow-hidden bg-background">
       {/* Sidebar navigation */}
       <Sidebar
         isOpen={sidebarOpen}
@@ -374,7 +408,7 @@ export default function Home() {
         isGenerating={isGenerating}
         onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
         modelName={settings.model}
-        onChangeModel={(model) => setSettings((prev) => ({ ...prev, model }))}
+        onChangeModel={handleChangeModel}
       />
 
       {/* Settings Modal popup */}
@@ -382,7 +416,13 @@ export default function Home() {
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
         settings={settings}
-        onSaveSettings={setSettings}
+        onSaveSettings={handleSaveSettings}
+      />
+
+      {/* Premium Lock Modal */}
+      <PremiumModal
+        isOpen={isPremiumOpen}
+        onClose={() => setIsPremiumOpen(false)}
       />
 
       {/* Notifications toast */}

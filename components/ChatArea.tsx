@@ -22,13 +22,12 @@ interface ChatAreaProps {
 }
 
 const MODEL_LABELS: Record<string, string> = {
-  'agnes-2.0-flash': 'Agnes 2.0 Flash',
-  'mistral-large': 'Mistral Large',
-  'mistral-medium-3-5': 'Mistral Medium 3.5',
+  'agnes-2.5-flash': 'Agnes 2.5 Flash',
+  'grok-4.5': 'Grok 4.5',
   'gpt-oss-120b': 'GPT OSS 120B',
 };
 
-const BYNARA_MODELS = ['agnes-2.0-flash', 'mistral-large', 'mistral-medium-3-5'];
+const BYNARA_MODELS = ['agnes-2.5-flash', 'grok-4.5'];
 const CEREBRAS_MODELS = ['gpt-oss-120b'];
 
 const SUGGESTIONS = [
@@ -346,7 +345,7 @@ export default function ChatArea({
               {modelDropdownOpen && (
                 <div className="absolute left-0 bottom-full mb-2 z-50 w-52 animate-fade-in-up rounded-2xl border border-border bg-bg-card py-2 shadow-lg origin-bottom-left">
                   <div className="px-3 pb-1 pt-1">
-                    <span className="text-[9.5px] font-bold uppercase tracking-widest text-primary">Bynara (Utama)</span>
+                    <span className="text-[9.5px] font-bold uppercase tracking-widest text-primary">Bynara (Premium)</span>
                   </div>
                   {BYNARA_MODELS.map(m => (
                     <button

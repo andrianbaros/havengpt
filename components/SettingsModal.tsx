@@ -85,10 +85,9 @@ export default function SettingsModal({ isOpen, onClose, settings, onSaveSetting
               onChange={(e) => handleChange('model', e.target.value)}
               className="w-full rounded-xl border border-border bg-bg-hover px-3.5 py-2.5 text-[13px] font-medium text-foreground focus:border-primary focus:shadow-glow outline-none transition-all duration-150 appearance-none cursor-pointer"
             >
-              <optgroup label="Bynara (Utama)">
-                <option value="agnes-2.0-flash">Agnes 2.0 Flash</option>
-                <option value="mistral-large">Mistral Large</option>
-                <option value="mistral-medium-3-5">Mistral Medium 3.5</option>
+              <optgroup label="Bynara (Premium)">
+                <option value="agnes-2.5-flash">Agnes 2.5 Flash</option>
+                <option value="grok-4.5">Grok 4.5</option>
               </optgroup>
               <optgroup label="Cerebras (Cadangan)">
                 <option value="gpt-oss-120b">GPT OSS 120B</option>
