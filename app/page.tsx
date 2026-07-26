@@ -90,6 +90,7 @@ export default function Home() {
       const unlocked = window.localStorage.getItem('haven_premium_unlocked') === 'true';
       if (isPremiumModel && !unlocked) {
         setSettings((prev) => ({ ...prev, model: 'gpt-oss-120b' }));
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setIsPremiumOpen(true);
       }
     }
