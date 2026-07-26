@@ -17,10 +17,11 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'KasepGPT — AI Assistant',
-  description: 'KasepGPT adalah AI assistant yang cepat, cerdas, dan membantu. Dibuat oleh Andrian Baros.',
+  title: 'KasepGPT — Tempat Curhat Sementara',
+  description: 'KasepGPT adalah teman curhat yang hangat, cerdas, dan empatik. Ceritakan apa pun yang kamu rasakan. Dibuat oleh Andrian Baros.',
   icons: {
-    icon: '/favicon.ico',
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
   },
 };
 

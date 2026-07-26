@@ -45,18 +45,15 @@ export default function Sidebar({
         }`}
       >
         {/* Logo area */}
-        <div className="flex h-14 shrink-0 items-center justify-between px-5 border-b border-white/[0.06]">
-          <div className="flex items-center gap-2.5">
-            <Image
-              src="/assets/logo.png"
-              alt="KasepGPT"
-              width={36}
-              height={36}
-              className="rounded-xl"
-              priority
-            />
-            <span className="text-[10px] text-[#64748B] tracking-wide">Curhat</span>
-          </div>
+        <div className="flex h-16 shrink-0 items-center justify-between px-4 border-b border-white/[0.06]">
+          <Image
+            src="/assets/logo.png"
+            alt="KasepGPT"
+            width={140}
+            height={44}
+            className="object-contain"
+            priority
+          />
           <button
             onClick={onClose}
             className="rounded-md p-1 text-[#64748B] hover:text-[#94A3B8] transition-colors duration-150 md:hidden"

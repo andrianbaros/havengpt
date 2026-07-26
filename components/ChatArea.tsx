@@ -150,9 +150,9 @@ export default function ChatArea({
             <Image
               src="/assets/logo.png"
               alt="KasepGPT"
-              width={34}
-              height={34}
-              className="rounded-xl"
+              width={130}
+              height={40}
+              className="object-contain"
               priority
             />
           </div>
