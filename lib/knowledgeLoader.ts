@@ -275,6 +275,76 @@ function loadLivingWeekly(): string {
   }
 }
 
+// ─── LATEST KNOWLEDGE MAPPINGS (knowledge/latest/) ───────────────────────────
+// These files contain up-to-date facts about the world (2026).
+// PRIORITY: latest/ is always loaded FIRST when matched, before category files.
+const LATEST_MAPPINGS = [
+  {
+    file: 'latest/football-2026.md',
+    keywords: [
+      'piala dunia 2026', 'world cup 2026', 'fifa 2026', 'juara piala dunia', 'champion world cup',
+      'piala dunia fifa', 'worldcup', 'world cup', 'piala dunia',
+    ],
+  },
+  {
+    file: 'latest/basketball-2026.md',
+    keywords: [
+      'nba 2026', 'nba finals 2026', 'juara nba', 'champion nba', 'nba champion',
+      'nba season 2026', 'basketball 2026',
+    ],
+  },
+  {
+    file: 'latest/formula1-2026.md',
+    keywords: [
+      'f1 2026', 'formula 1 2026', 'formula one 2026', 'juara f1', 'champion f1',
+      'grand prix 2026', 'verstappen 2026', 'hamilton 2026', 'norris 2026',
+    ],
+  },
+  {
+    file: 'latest/motogp-2026.md',
+    keywords: [
+      'motogp 2026', 'moto gp 2026', 'juara motogp', 'champion motogp',
+      'bagnaia 2026', 'martin 2026', 'marquez 2026',
+    ],
+  },
+  {
+    file: 'latest/technology-2026.md',
+    keywords: [
+      'gpt-5', 'gpt5', 'claude 4', 'gemini 3', 'llama 4', 'grok 4', 'model ai terbaru',
+      'ai terbaru', 'teknologi 2026', 'tech 2026', 'openai 2026', 'anthropic 2026',
+    ],
+  },
+  {
+    file: 'latest/gaming-2026.md',
+    keywords: [
+      'game 2026', 'esports 2026', 'gaming 2026', 'mpl 2026', 'worlds 2026',
+      'vct 2026', 'mobile legends 2026', 'valorant 2026', 'gta vi',
+    ],
+  },
+  {
+    file: 'latest/movies-2026.md',
+    keywords: [
+      'film 2026', 'movie 2026', 'oscar 2026', 'academy awards 2026', 'box office 2026',
+      'avengers secret wars', 'avatar 3', 'squid game season 3', 'anime 2026',
+      'one piece 2026', 'chainsaw man 2', 'solo leveling 2',
+    ],
+  },
+  {
+    file: 'latest/economics-2026.md',
+    keywords: [
+      'ekonomi 2026', 'bitcoin 2026', 'crypto 2026', 'kripto 2026', 'saham 2026',
+      'ihsg 2026', 'inflasi 2026', 'resesi 2026', 'the fed 2026', 'harga emas 2026',
+    ],
+  },
+  {
+    file: 'latest/indonesia-2026.md',
+    keywords: [
+      'indonesia 2026', 'prabowo 2026', 'ikn 2026', 'nusantara 2026',
+      'timnas indonesia 2026', 'ekonomi indonesia 2026', 'presiden indonesia',
+    ],
+  },
+];
+
 function scoreMapping(mapping: TopicMapping, normalizedMsg: string): number {
   return mapping.keywords.filter(kw => normalizedMsg.includes(kw)).length;
 }
@@ -319,22 +389,33 @@ function getMatchedExamples(matchedFiles: string[]): string {
 export function getDynamicSystemPrompt(userMessage: string): string {
   const normalizedMsg = userMessage.toLowerCase();
 
-  // 1. Match counseling topics (root files)
+  // ── PRIORITY 1: Latest knowledge (knowledge/latest/) ─────────────────────
+  // Score-based: load top 2 latest files most relevant to the message
+  const latestMatches = LATEST_MAPPINGS
+    .map(mapping => ({ file: mapping.file, score: scoreMapping(mapping, normalizedMsg) }))
+    .filter(m => m.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 2)
+    .map(m => m.file);
+
+  // ── PRIORITY 2: Counseling topics (knowledge/ root) ──────────────────────
   const counselingMatches: string[] = [];
   COUNSELING_MAPPINGS.forEach(mapping => {
     const hasKeyword = mapping.keywords.some(kw => normalizedMsg.includes(kw));
     if (hasKeyword) counselingMatches.push(mapping.file);
   });
 
-  // 2. Score & match knowledge pack topics (subfolders) — take top 3 by score
+  // ── PRIORITY 3: Knowledge pack topics (subfolders) ───────────────────────
+  // Take top 3 by score, but reduce to top 2 if latest already loaded to save tokens
+  const maxPack = latestMatches.length > 0 ? 2 : 3;
   const knowledgePackMatches = KNOWLEDGE_PACK_MAPPINGS
     .map(mapping => ({ file: mapping.file, score: scoreMapping(mapping, normalizedMsg) }))
     .filter(m => m.score > 0)
     .sort((a, b) => b.score - a.score)
-    .slice(0, 3)
+    .slice(0, maxPack)
     .map(m => m.file);
 
-  // 3. Load core counseling modules (always included)
+  // ── CORE: Always-included counseling guidelines ───────────────────────────
   const coreFiles = ['personality.md', 'response_style.md', 'counseling.md', 'active_listening.md', 'empathy.md'];
   let dynamicPrompt = `${BASE_PROMPT}\n\n`;
   dynamicPrompt += `--- \n\n## PANDUAN UTAMA KELAYAKAN KONSELI:\n`;
@@ -343,7 +424,17 @@ export function getDynamicSystemPrompt(userMessage: string): string {
     if (content) dynamicPrompt += `\n${content}\n`;
   });
 
-  // 4. Load matched counseling modules (max 3)
+  // ── PRIORITY 1: Inject latest/ knowledge first ────────────────────────────
+  if (latestMatches.length > 0) {
+    dynamicPrompt += `\n\n--- \n\n## LATEST KNOWLEDGE — FAKTA TERKINI 2026 (PRIORITAS UTAMA):\n`;
+    dynamicPrompt += `> INSTRUKSI: Gunakan data di bawah ini sebagai sumber utama jawaban. Data ini lebih akurat dari pengetahuan model.\n`;
+    latestMatches.forEach(file => {
+      const content = readKnowledgeFile(file);
+      if (content) dynamicPrompt += `\n${content}\n`;
+    });
+  }
+
+  // ── PRIORITY 2: Counseling modules ───────────────────────────────────────
   const finalCounseling = counselingMatches.slice(0, 3);
   if (finalCounseling.length > 0) {
     dynamicPrompt += `\n\n--- \n\n## MODUL KNOWLEDGE RELEVAN DENGAN TOPIK USER:\n`;
@@ -355,7 +446,7 @@ export function getDynamicSystemPrompt(userMessage: string): string {
     if (examples) dynamicPrompt += examples;
   }
 
-  // 5. Load matched knowledge pack modules (max 3 by score)
+  // ── PRIORITY 3: Knowledge pack (category subfolders) ─────────────────────
   if (knowledgePackMatches.length > 0) {
     dynamicPrompt += `\n\n--- \n\n## KNOWLEDGE PACK — KONTEKS TOPIK PERCAKAPAN:\n`;
     knowledgePackMatches.forEach(file => {
@@ -364,10 +455,12 @@ export function getDynamicSystemPrompt(userMessage: string): string {
     });
   }
 
-  // 6. Append living/weekly context (always appended if files exist, lightweight)
-  const weeklyContent = loadLivingWeekly();
-  if (weeklyContent) {
-    dynamicPrompt += `\n\n--- \n\n## LIVING KNOWLEDGE — KONTEKS MINGGUAN:\n\n${weeklyContent}`;
+  // ── LIVING WEEKLY: Only if no latest file was matched ────────────────────
+  if (latestMatches.length === 0) {
+    const weeklyContent = loadLivingWeekly();
+    if (weeklyContent) {
+      dynamicPrompt += `\n\n--- \n\n## LIVING KNOWLEDGE — KONTEKS MINGGUAN:\n\n${weeklyContent}`;
+    }
   }
 
   return dynamicPrompt.trim();
