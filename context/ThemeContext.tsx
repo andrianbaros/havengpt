@@ -21,6 +21,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
     const initialTheme: Theme = savedTheme || (systemDark ? 'dark' : 'light');
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setThemeState(initialTheme);
     
     // Apply initial class
