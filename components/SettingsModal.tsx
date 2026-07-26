@@ -51,28 +51,25 @@ export default function SettingsModal({ isOpen, onClose, settings, onSaveSetting
               {theme === 'dark' ? <Moon className="h-3.5 w-3.5" strokeWidth={2} /> : <Sun className="h-3.5 w-3.5" strokeWidth={2} />}
               Tema Tampilan
             </label>
-            <div className="flex gap-2">
+            <div className="flex items-center justify-between rounded-xl border border-border bg-bg-hover px-4 py-2 focus-within:ring-2 focus-within:ring-primary/20">
+              <span className="text-[13px] font-semibold text-foreground">
+                {theme === 'dark' ? 'Mode Gelap' : 'Mode Terang'}
+              </span>
               <button
                 type="button"
-                onClick={() => setTheme('light')}
-                className={`flex-1 rounded-xl border py-2.5 text-[12.5px] font-semibold transition-all duration-150 focus-visible:outline-none ${
-                  theme === 'light'
-                    ? 'border-primary bg-bg-hover text-primary'
-                    : 'border-border bg-bg-card text-secondary-text hover:bg-bg-hover'
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                  theme === 'dark' ? 'bg-primary' : 'bg-border'
                 }`}
+                role="switch"
+                aria-checked={theme === 'dark'}
+                aria-label="Toggle theme"
               >
-                Light Mode
-              </button>
-              <button
-                type="button"
-                onClick={() => setTheme('dark')}
-                className={`flex-1 rounded-xl border py-2.5 text-[12.5px] font-semibold transition-all duration-150 focus-visible:outline-none ${
-                  theme === 'dark'
-                    ? 'border-primary bg-bg-hover text-primary'
-                    : 'border-border bg-bg-card text-secondary-text hover:bg-bg-hover'
-                }`}
-              >
-                Dark Mode
+                <span
+                  className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                    theme === 'dark' ? 'translate-x-5' : 'translate-x-0'
+                  }`}
+                />
               </button>
             </div>
           </div>

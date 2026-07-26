@@ -187,24 +187,32 @@ export default function Sidebar({
           )}
 
           <div className="flex gap-1.5">
-            {/* Theme Toggle Button */}
-            <button
-              onClick={toggleTheme}
-              className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-bg-card border border-border px-3 py-2 text-[12px] font-medium text-foreground hover:bg-bg-hover transition-all duration-150 focus-visible:outline-none"
-              aria-label="Toggle theme"
-            >
-              {theme === 'dark' ? (
-                <>
-                  <Sun className="h-3.5 w-3.5 text-yellow-500" strokeWidth={1.75} />
-                  <span>Light Mode</span>
-                </>
-              ) : (
-                <>
-                  <Moon className="h-3.5 w-3.5 text-indigo-500" strokeWidth={1.75} />
-                  <span>Dark Mode</span>
-                </>
-              )}
-            </button>
+            {/* Theme Toggle Switch Slider */}
+            <div className="flex flex-1 items-center justify-between rounded-xl bg-bg-card border border-border px-3 py-1.5 min-w-0">
+              <span className="text-[11px] font-semibold text-secondary-text flex items-center gap-1.5 truncate">
+                {theme === 'dark' ? (
+                  <Moon className="h-3.5 w-3.5 text-indigo-500 shrink-0" strokeWidth={1.75} />
+                ) : (
+                  <Sun className="h-3.5 w-3.5 text-yellow-500 shrink-0" strokeWidth={1.75} />
+                )}
+                <span className="truncate">{theme === 'dark' ? 'Gelap' : 'Terang'}</span>
+              </span>
+              <button
+                onClick={toggleTheme}
+                className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                  theme === 'dark' ? 'bg-primary' : 'bg-border'
+                }`}
+                role="switch"
+                aria-checked={theme === 'dark'}
+                aria-label="Toggle theme"
+              >
+                <span
+                  className={`pointer-events-none inline-block h-3.5 w-3.5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                    theme === 'dark' ? 'translate-x-4' : 'translate-x-0'
+                  }`}
+                />
+              </button>
+            </div>
 
             {/* Settings Button */}
             <button
@@ -212,7 +220,7 @@ export default function Sidebar({
                 onOpenSettings();
                 onClose();
               }}
-              className="flex h-9 w-9 items-center justify-center rounded-xl bg-bg-card border border-border text-foreground hover:bg-bg-hover transition-all duration-150 focus-visible:outline-none"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-bg-card border border-border text-foreground hover:bg-bg-hover transition-all duration-150 focus-visible:outline-none"
               aria-label="Pengaturan"
             >
               <Settings className="h-4 w-4 text-primary" strokeWidth={1.75} />
