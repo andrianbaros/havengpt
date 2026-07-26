@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { SYSTEM_PROMPT } from '../../../lib/systemPrompt';
+import { getDynamicSystemPrompt } from '../../../lib/knowledgeLoader';
 
 export const runtime    = 'nodejs';
 export const maxDuration = 60; // seconds (Vercel Hobby limit)
@@ -15,7 +15,7 @@ async function callProvider(
   messages: ChatMessage[],
   temperature: number,
   maxTokens: number,
-): Promise<Response> {
+ ): Promise<Response> {
   return fetch(url, {
     method: 'POST',
     headers: {
@@ -51,13 +51,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Get last user message to load dynamic context
+    const lastUserMsg = messages[messages.length - 1]?.content || '';
+    const dynamicSystemPrompt = getDynamicSystemPrompt(lastUserMsg);
+
     // Build message array with system prompt
     const formattedMessages: ChatMessage[] = [...messages];
     const sysIdx = formattedMessages.findIndex((m) => m.role === 'system');
     if (sysIdx === -1) {
-      formattedMessages.unshift({ role: 'system', content: SYSTEM_PROMPT });
+      formattedMessages.unshift({ role: 'system', content: dynamicSystemPrompt });
     } else {
-      formattedMessages[sysIdx].content = `${SYSTEM_PROMPT}\n\n${formattedMessages[sysIdx].content}`;
+      formattedMessages[sysIdx].content = `${dynamicSystemPrompt}\n\n${formattedMessages[sysIdx].content}`;
     }
 
     const isBynara = BYNARA_MODELS.includes(model);
