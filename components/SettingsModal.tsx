@@ -90,7 +90,7 @@ export default function SettingsModal({ isOpen, onClose, settings, onSaveSetting
                 <option value="mistral-large">Mistral Large</option>
                 <option value="mistral-medium-3-5">Mistral Medium 3.5</option>
               </optgroup>
-              <optgroup label="Model Premium — Rp59.999">
+              <optgroup label="Model Premium — Rp10.999">
                 <option value="agnes-2.5-flash">Agnes 2.5 Flash (Pro)</option>
                 <option value="grok-4.5">Grok 4.5 (Pro)</option>
               </optgroup>

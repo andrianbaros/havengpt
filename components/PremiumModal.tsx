@@ -37,7 +37,7 @@ export default function PremiumModal({ isOpen, onClose }: PremiumModalProps) {
         </h3>
         
         <p className="text-[13px] leading-relaxed text-secondary-text mb-4">
-          Silakan top up sebesar <span className="font-bold text-primary">Rp59.999</span> untuk mengaktifkan model premium (<span className="font-semibold text-foreground">agnes-2.5-flash</span> & <span className="font-semibold text-foreground">grok-4.5</span>).
+          Silakan top up sebesar <span className="font-bold text-primary">Rp10.999</span> untuk mengaktifkan model premium (<span className="font-semibold text-foreground">agnes-2.5-flash</span> & <span className="font-semibold text-foreground">grok-4.5</span>).
         </p>
 
         <div className="rounded-xl bg-bg-hover/80 border border-border p-4 text-[12px] leading-relaxed text-secondary-text text-left space-y-2">
