@@ -4,7 +4,7 @@ import { getDynamicSystemPrompt } from '../../../lib/knowledgeLoader';
 export const runtime    = 'nodejs';
 export const maxDuration = 60; // seconds (Vercel Hobby limit)
 
-const BYNARA_MODELS = ['agnes-2.0-flash', 'mistral-large', 'mistral-medium-3-5', 'agnes-2.5-flash', 'grok-4.5'];
+const BYNARA_MODELS = ['agnes-2.5-flash'];
 
 type ChatMessage = { role: string; content: string };
 
@@ -73,10 +73,10 @@ export async function POST(req: NextRequest) {
       model,
     };
     const fallback = {
-      name:  isBynara ? 'Cerebras' : 'Bynara',
-      url:   isBynara ? 'https://api.cerebras.ai/v1/chat/completions' : 'https://router.bynara.id/v1/chat/completions',
-      key:   isBynara ? cerebrasKey : bynaraKey,
-      model: isBynara ? 'gpt-oss-120b' : 'agnes-2.5-flash',
+      name:  cerebrasKey ? 'Cerebras' : 'Bynara',
+      url:   cerebrasKey ? 'https://api.cerebras.ai/v1/chat/completions' : 'https://router.bynara.id/v1/chat/completions',
+      key:   cerebrasKey || bynaraKey,
+      model: cerebrasKey ? 'gpt-oss-120b' : 'agnes-2.5-flash',
     };
 
     let response: Response | null = null;

@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Sidebar from '../components/Sidebar';
 import ChatArea from '../components/ChatArea';
 import SettingsModal from '../components/SettingsModal';
-import PremiumModal from '../components/PremiumModal';
 import Toast, { ToastMessage } from '../components/Toast';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { chatStorage } from '../lib/chat-storage';
@@ -30,7 +29,6 @@ export default function Home() {
     return true;
   });
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [isPremiumOpen, setIsPremiumOpen] = useState(false);
   const [toast, setToast] = useState<ToastMessage | null>(null);
 
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -82,19 +80,6 @@ export default function Home() {
       chatStorage.saveChats(chats);
     }
   }, [chats, isLoaded]);
-
-  // Enforce premium access lock on load/model change
-  useEffect(() => {
-    if (isLoaded) {
-      const isPremiumModel = ['grok-4.5'].includes(settings.model);
-      const unlocked = window.localStorage.getItem('haven_premium_unlocked') === 'true';
-      if (isPremiumModel && !unlocked) {
-        setSettings((prev) => ({ ...prev, model: 'agnes-2.5-flash' }));
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setIsPremiumOpen(true);
-      }
-    }
-  }, [settings.model, isLoaded, setSettings]);
 
   // Save active id on change
   useEffect(() => {
@@ -364,22 +349,10 @@ export default function Home() {
   };
 
   const handleSaveSettings = useCallback((newSettings: Settings) => {
-    const isPremiumModel = ['grok-4.5'].includes(newSettings.model);
-    const unlocked = typeof window !== 'undefined' && window.localStorage.getItem('haven_premium_unlocked') === 'true';
-    if (isPremiumModel && !unlocked) {
-      setIsPremiumOpen(true);
-      return;
-    }
     setSettings(newSettings);
   }, [setSettings]);
 
   const handleChangeModel = useCallback((model: string) => {
-    const isPremiumModel = ['grok-4.5'].includes(model);
-    const unlocked = typeof window !== 'undefined' && window.localStorage.getItem('haven_premium_unlocked') === 'true';
-    if (isPremiumModel && !unlocked) {
-      setIsPremiumOpen(true);
-      return;
-    }
     setSettings((prev) => ({ ...prev, model }));
   }, [setSettings]);
 
@@ -418,12 +391,6 @@ export default function Home() {
         onClose={() => setIsSettingsOpen(false)}
         settings={settings}
         onSaveSettings={handleSaveSettings}
-      />
-
-      {/* Premium Lock Modal */}
-      <PremiumModal
-        isOpen={isPremiumOpen}
-        onClose={() => setIsPremiumOpen(false)}
       />
 
       {/* Notifications toast */}

@@ -3,7 +3,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import {
   Send, Menu, ArrowDown, Copy, Check,
-  RotateCcw, StopCircle, AlertCircle, ChevronDown, Cpu,
+  RotateCcw, StopCircle, AlertCircle, Cpu,
   Heart, User, MessageCircleHeart
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
@@ -17,22 +17,9 @@ interface ChatAreaProps {
   onStopGeneration: () => void;
   isGenerating: boolean;
   onToggleSidebar: () => void;
-  modelName: string;
-  onChangeModel: (model: string) => void;
+  modelName?: string;
+  onChangeModel?: (model: string) => void;
 }
-
-const MODEL_LABELS: Record<string, string> = {
-  'agnes-2.0-flash': 'Agnes 2.0 Flash',
-  'mistral-large': 'Mistral Large',
-  'mistral-medium-3-5': 'Mistral Medium 3.5',
-  'agnes-2.5-flash': 'Agnes 2.5 Flash',
-  'grok-4.5': 'Grok 4.5',
-  'gpt-oss-120b': 'GPT OSS 120B',
-};
-
-const BYNARA_FREE_MODELS = ['agnes-2.0-flash', 'mistral-large', 'mistral-medium-3-5'];
-const BYNARA_PREMIUM_MODELS = ['agnes-2.5-flash', 'grok-4.5'];
-const CEREBRAS_MODELS = ['gpt-oss-120b'];
 
 const SUGGESTIONS = [
   {
@@ -64,20 +51,15 @@ export default function ChatArea({
   onStopGeneration,
   isGenerating,
   onToggleSidebar,
-  modelName,
-  onChangeModel,
 }: ChatAreaProps) {
   const [input, setInput] = useState('');
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  const [modelDropdownOpen, setModelDropdownOpen] = useState(false);
   const [showScrollBottom, setShowScrollBottom] = useState(false);
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const messages = chat?.messages || [];
-  const displayLabel = MODEL_LABELS[modelName] || modelName;
 
   // Auto scroll to bottom on new messages
   const scrollToBottom = (behavior: ScrollBehavior = 'smooth') => {
@@ -98,17 +80,6 @@ export default function ChatArea({
     const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
     setShowScrollBottom(scrollHeight - scrollTop - clientHeight > 120);
   };
-
-  // Close dropdown on click outside
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setModelDropdownOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
   const handleSend = () => {
     if (!input.trim() || isGenerating) return;
@@ -331,79 +302,10 @@ export default function ChatArea({
         <div className="mx-auto max-w-2xl">
           <div className="flex flex-col sm:flex-row sm:items-end gap-2.5 rounded-2xl border border-border bg-bg-card p-3 shadow-sm transition-all duration-200 focus-within:border-primary/50 focus-within:shadow-glow">
             
-            {/* Model Selector Dropdown */}
-            <div className="relative shrink-0" ref={dropdownRef}>
-              <button
-                onClick={() => setModelDropdownOpen(v => !v)}
-                className="flex h-7 items-center gap-1.5 rounded-xl bg-bg-hover px-2.5 text-[11px] font-semibold text-primary hover:bg-bg-hover/80 transition-all duration-150 focus-visible:outline-none"
-                aria-label="Pilih model AI"
-              >
-                <Cpu className="h-3 w-3 shrink-0" strokeWidth={1.75} />
-                <span className="truncate">{displayLabel}</span>
-                <ChevronDown
-                  className={`h-2.5 w-2.5 transition-transform duration-200 ${modelDropdownOpen ? 'rotate-180' : ''}`}
-                  strokeWidth={2}
-                />
-              </button>
-
-              {modelDropdownOpen && (
-                <div className="absolute left-0 bottom-full mb-2 z-50 w-52 animate-fade-in-up rounded-2xl border border-border bg-bg-card py-2 shadow-lg origin-bottom-left">
-                  {/* Bynara Free Models */}
-                  <div className="px-3 pb-1 pt-1">
-                    <span className="text-[9.5px] font-bold uppercase tracking-widest text-text-muted">Standar</span>
-                  </div>
-                  {BYNARA_FREE_MODELS.map(m => (
-                    <button
-                      key={m}
-                      onClick={() => { onChangeModel(m); setModelDropdownOpen(false); }}
-                      className={`flex w-full items-center justify-between px-3 py-2 text-[12.5px] font-medium transition-colors duration-150 hover:bg-bg-hover focus-visible:outline-none ${
-                        modelName === m ? 'text-primary font-bold' : 'text-foreground'
-                      }`}
-                    >
-                      {MODEL_LABELS[m] || m}
-                      {modelName === m && <div className="h-1.5 w-1.5 rounded-full bg-primary" />}
-                    </button>
-                  ))}
-
-                  <div className="mx-3 my-1 border-t border-border/60" />
-
-                  {/* Bynara Premium Models */}
-                  <div className="px-3 pb-1 pt-1">
-                    <span className="text-[9.5px] font-bold uppercase tracking-widest text-primary animate-pulse">Premium</span>
-                  </div>
-                  {BYNARA_PREMIUM_MODELS.map(m => (
-                    <button
-                      key={m}
-                      onClick={() => { onChangeModel(m); setModelDropdownOpen(false); }}
-                      className={`flex w-full items-center justify-between px-3 py-2 text-[12.5px] font-medium transition-colors duration-150 hover:bg-bg-hover focus-visible:outline-none ${
-                        modelName === m ? 'text-primary font-bold' : 'text-foreground'
-                      }`}
-                    >
-                      <span className="flex items-center gap-1.5">
-                        <span>{MODEL_LABELS[m] || m}</span>
-                        <span className="rounded bg-primary/10 px-1 py-0.5 text-[8.5px] font-bold text-primary">PRO</span>
-                      </span>
-                      {modelName === m && <div className="h-1.5 w-1.5 rounded-full bg-primary" />}
-                    </button>
-                  ))}
-                  <div className="mx-3 my-1 border-t border-border" />
-                  <div className="px-3 pb-1 pt-1">
-                    <span className="text-[9.5px] font-bold uppercase tracking-widest text-text-muted">Cadangan</span>
-                  </div>
-                  {CEREBRAS_MODELS.map(m => (
-                    <button
-                      key={m}
-                      onClick={() => { onChangeModel(m); setModelDropdownOpen(false); }}
-                      className={`flex w-full items-center justify-between px-3 py-2 text-[12.5px] font-medium transition-colors duration-150 hover:bg-bg-hover focus-visible:outline-none ${
-                        modelName === m ? 'text-primary font-bold' : 'text-foreground'
-                      }`}
-                    >
-                      {MODEL_LABELS[m] || m}
-                      {modelName === m && <div className="h-1.5 w-1.5 rounded-full bg-primary" />}
-                    </button>
-                  ))}
-                </div>
-              )}
+            {/* Model Badge */}
+            <div className="flex h-7 items-center gap-1.5 rounded-xl bg-bg-hover px-2.5 text-[11px] font-semibold text-primary shrink-0">
+              <Cpu className="h-3 w-3 shrink-0" strokeWidth={1.75} />
+              <span className="truncate">Agnes 2.5 Flash</span>
             </div>
 
             <div className="hidden sm:block mb-1 h-5 w-px bg-border shrink-0" />
