@@ -36,13 +36,14 @@ export async function POST(req: NextRequest) {
   try {
     const {
       messages,
-      model = 'stepfun-3.7-flash',
       temperature = 0.7,
       maxTokens = 4000,
     } = await req.json();
 
-    const bynaraKey   = process.env.BYNARA_API_KEY;
-    const cerebrasKey = process.env.CEREBRAS_API_KEY;
+    // Selalu gunakan Stepfun 3.7 Flash melalui Bynara
+    const activeModel = 'stepfun-3.7-flash';
+
+    const bynaraKey = process.env.BYNARA_API_KEY;
 
     if (!bynaraKey) {
       return NextResponse.json(
@@ -64,60 +65,32 @@ export async function POST(req: NextRequest) {
       formattedMessages[sysIdx].content = `${dynamicSystemPrompt}\n\n${formattedMessages[sysIdx].content}`;
     }
 
-    const isBynara = BYNARA_MODELS.includes(model);
-
     const primary = {
-      name:  isBynara ? 'Bynara' : 'Cerebras',
-      url:   isBynara ? 'https://router.bynara.id/v1/chat/completions' : 'https://api.cerebras.ai/v1/chat/completions',
-      key:   isBynara ? bynaraKey : cerebrasKey,
-      model,
-    };
-    const fallback = {
-      name:  cerebrasKey ? 'Cerebras' : 'Bynara',
-      url:   cerebrasKey ? 'https://api.cerebras.ai/v1/chat/completions' : 'https://router.bynara.id/v1/chat/completions',
-      key:   cerebrasKey || bynaraKey,
-      model: cerebrasKey ? 'gpt-oss-120b' : 'stepfun-3.7-flash',
+      name:  'Bynara',
+      url:   'https://router.bynara.id/v1/chat/completions',
+      key:   bynaraKey,
+      model: activeModel,
     };
 
     let response: Response | null = null;
 
-    // ── 1. Try primary ─────────────────────────────
-    if (primary.key) {
-      try {
-        console.log(`[Haven] Primary → ${primary.name} / ${primary.model}`);
-        const res = await callProvider(primary.url, primary.key, primary.model, formattedMessages, temperature, maxTokens);
-        if (res.ok) {
-          response = res;
-        } else {
-          const txt = await res.text().catch(() => '');
-          console.warn(`[Haven] Primary (${primary.name}) failed — ${res.status}: ${txt}`);
-        }
-      } catch (err) {
-        console.warn(`[Haven] Primary (${primary.name}) threw:`, err);
-      }
-    } else {
-      console.warn(`[Haven] Primary key for ${primary.name} is missing. Skipping to fallback.`);
-    }
-
-    // ── 2. Try fallback ────────────────────────────
-    if (!response) {
-      if (!fallback.key) {
-        return NextResponse.json(
-          { error: `Primary provider (${primary.name}) failed and fallback key (${fallback.name}) is not configured.` },
-          { status: 503 },
-        );
-      }
-
-      console.log(`[Haven] Fallback → ${fallback.name} / ${fallback.model}`);
-      const res = await callProvider(fallback.url, fallback.key, fallback.model, formattedMessages, temperature, maxTokens);
-      if (!res.ok) {
+    try {
+      console.log(`[Haven] Calling Bynara / ${activeModel}`);
+      const res = await callProvider(primary.url, primary.key, primary.model, formattedMessages, temperature, maxTokens);
+      if (res.ok) {
+        response = res;
+      } else {
         const txt = await res.text().catch(() => '');
+        console.warn(`[Haven] Bynara failed — ${res.status}: ${txt}`);
         return NextResponse.json(
-          { error: `Both providers failed. Fallback (${fallback.name}) error: ${res.status}. ${txt}` },
+          { error: `Provider error (${res.status}): ${txt}` },
           { status: res.status },
         );
       }
-      response = res;
+    } catch (err) {
+      console.warn(`[Haven] Bynara threw:`, err);
+      const msg = err instanceof Error ? err.message : 'Connection to provider failed.';
+      return NextResponse.json({ error: msg }, { status: 502 });
     }
 
     // ── 3. Forward streaming response ─────────────
