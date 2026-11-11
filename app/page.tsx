@@ -10,7 +10,7 @@ import { chatStorage } from '../lib/chat-storage';
 import { Chat, Message, Settings } from '../types';
 
 const DEFAULT_SETTINGS: Settings = {
-  model: 'agnes-2.5-flash',
+  model: 'stepfun-3.7-flash',
   temperature: 0.7,
   maxTokens: 4000,
 };

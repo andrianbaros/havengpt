@@ -4,7 +4,7 @@ import { getDynamicSystemPrompt } from '../../../lib/knowledgeLoader';
 export const runtime    = 'nodejs';
 export const maxDuration = 60; // seconds (Vercel Hobby limit)
 
-const BYNARA_MODELS = ['agnes-2.5-flash'];
+const BYNARA_MODELS = ['stepfun-3.7-flash'];
 
 type ChatMessage = { role: string; content: string };
 
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
   try {
     const {
       messages,
-      model = 'agnes-2.5-flash',
+      model = 'stepfun-3.7-flash',
       temperature = 0.7,
       maxTokens = 4000,
     } = await req.json();
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
       name:  cerebrasKey ? 'Cerebras' : 'Bynara',
       url:   cerebrasKey ? 'https://api.cerebras.ai/v1/chat/completions' : 'https://router.bynara.id/v1/chat/completions',
       key:   cerebrasKey || bynaraKey,
-      model: cerebrasKey ? 'gpt-oss-120b' : 'agnes-2.5-flash',
+      model: cerebrasKey ? 'gpt-oss-120b' : 'stepfun-3.7-flash',
     };
 
     let response: Response | null = null;

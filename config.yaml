@@ -4,6 +4,6 @@ custom_providers:
     key_env: CEREBRAS_API_KEY
 
 model:
-  default: agnes-2.5-flash
+  default: stepfun-3.7-flash
   provider: custom:bynara
   max_tokens: 4000

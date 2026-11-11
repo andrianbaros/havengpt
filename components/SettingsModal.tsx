@@ -81,10 +81,10 @@ export default function SettingsModal({ isOpen, onClose, settings, onSaveSetting
               Model AI
             </label>
             <div className="w-full rounded-xl border border-border bg-bg-hover px-3.5 py-2.5 text-[13px] font-medium text-foreground">
-              Agnes 2.5 Flash
+              Stepfun 3.7 Flash
             </div>
             <p className="text-[11.5px] leading-relaxed text-secondary-text">
-              Haven menggunakan Agnes 2.5 Flash sebagai model utama berkecepatan tinggi dan berdaya nalar tinggi.
+              Haven menggunakan Stepfun 3.7 Flash sebagai model utama berkecepatan tinggi dan berdaya nalar tinggi.
             </p>
           </div>
 

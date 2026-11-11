@@ -305,7 +305,7 @@ export default function ChatArea({
             {/* Model Badge */}
             <div className="flex h-7 items-center gap-1.5 rounded-xl bg-bg-hover px-2.5 text-[11px] font-semibold text-primary shrink-0">
               <Cpu className="h-3 w-3 shrink-0" strokeWidth={1.75} />
-              <span className="truncate">Agnes 2.5 Flash</span>
+              <span className="truncate">Stepfun 3.7 Flash</span>
             </div>
 
             <div className="hidden sm:block mb-1 h-5 w-px bg-border shrink-0" />
