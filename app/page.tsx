@@ -11,7 +11,7 @@ import { chatStorage } from '../lib/chat-storage';
 import { Chat, Message, Settings } from '../types';
 
 const DEFAULT_SETTINGS: Settings = {
-  model: 'gpt-oss-120b',
+  model: 'agnes-2.5-flash',
   temperature: 0.7,
   maxTokens: 4000,
 };
@@ -86,10 +86,10 @@ export default function Home() {
   // Enforce premium access lock on load/model change
   useEffect(() => {
     if (isLoaded) {
-      const isPremiumModel = ['agnes-2.5-flash', 'grok-4.5'].includes(settings.model);
+      const isPremiumModel = ['grok-4.5'].includes(settings.model);
       const unlocked = window.localStorage.getItem('haven_premium_unlocked') === 'true';
       if (isPremiumModel && !unlocked) {
-        setSettings((prev) => ({ ...prev, model: 'gpt-oss-120b' }));
+        setSettings((prev) => ({ ...prev, model: 'agnes-2.5-flash' }));
         // eslint-disable-next-line react-hooks/set-state-in-effect
         setIsPremiumOpen(true);
       }
@@ -364,7 +364,7 @@ export default function Home() {
   };
 
   const handleSaveSettings = useCallback((newSettings: Settings) => {
-    const isPremiumModel = ['agnes-2.5-flash', 'grok-4.5'].includes(newSettings.model);
+    const isPremiumModel = ['grok-4.5'].includes(newSettings.model);
     const unlocked = typeof window !== 'undefined' && window.localStorage.getItem('haven_premium_unlocked') === 'true';
     if (isPremiumModel && !unlocked) {
       setIsPremiumOpen(true);
@@ -374,7 +374,7 @@ export default function Home() {
   }, [setSettings]);
 
   const handleChangeModel = useCallback((model: string) => {
-    const isPremiumModel = ['agnes-2.5-flash', 'grok-4.5'].includes(model);
+    const isPremiumModel = ['grok-4.5'].includes(model);
     const unlocked = typeof window !== 'undefined' && window.localStorage.getItem('haven_premium_unlocked') === 'true';
     if (isPremiumModel && !unlocked) {
       setIsPremiumOpen(true);

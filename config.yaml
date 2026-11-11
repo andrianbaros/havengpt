@@ -4,6 +4,6 @@ custom_providers:
     key_env: CEREBRAS_API_KEY
 
 model:
-  default: gpt-oss-120b
-  provider: custom:cerebras
+  default: agnes-2.5-flash
+  provider: custom:bynara
   max_tokens: 4000
